@@ -1,0 +1,14 @@
+fastapi==0.95.2
+uvicorn==0.22.0
+requests==2.31.0
+python-dotenv==1.0.0
+numpy==1.26.2
+scikit-learn==1.4.0
+sentence-transformers==2.2.2
+# faiss-cpu==1.7.4  # optional
+google-generativeai==0.7.2
+opentelemetry-api==1.24.0
+opentelemetry-sdk==1.24.0
+opentelemetry-exporter-otlp==1.24.0
+psutil==5.9.5
+PyYAML==6.0

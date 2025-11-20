@@ -1,0 +1,7 @@
+{
+  "name": "pricing_agent",
+  "version": "0.1.0",
+  "description": "Pricing Agent - recommend price",
+  "capabilities": ["recommend_price"],
+  "agent_card_url": "http://localhost:8003/.well-known/agent-card.json"
+}

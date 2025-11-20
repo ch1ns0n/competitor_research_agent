@@ -1,0 +1,7 @@
+{
+  "name": "sentiment_agent",
+  "version": "0.1.0",
+  "description": "Sentiment Agent - analyze reviews",
+  "capabilities": ["analyze_reviews"],
+  "agent_card_url": "http://localhost:8002/.well-known/agent-card.json"
+}

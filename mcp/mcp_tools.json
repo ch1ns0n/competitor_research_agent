@@ -1,0 +1,16 @@
+{
+  "tools": [
+    {
+      "name": "fetch_product_page",
+      "description": "Return structured product data given a product URL",
+      "input_schema": {"type":"object","properties":{"url":{"type":"string"}},"required":["url"]},
+      "output_schema": {"type":"object"}
+    },
+    {
+      "name": "fetch_reviews",
+      "description": "Return reviews for a product ID",
+      "input_schema": {"type":"object","properties":{"product_id":{"type":"string"}},"required":["product_id"]},
+      "output_schema": {"type":"object"}
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/product-intel-agent', '.']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'product-intel-agent', '--image', 'gcr.io/$PROJECT_ID/product-intel-agent', '--region', 'us-central1']
+timeout: '1200s'

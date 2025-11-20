@@ -1,0 +1,7 @@
+{
+  "name": "scraper_agent",
+  "version": "0.1.0",
+  "description": "Scraper Agent exposing MCP & a2a endpoints",
+  "capabilities": ["fetch_product_page","fetch_reviews"],
+  "agent_card_url": "http://localhost:8001/.well-known/agent-card.json"
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "case_1",
+  "llm_score": {
+    "accuracy": 5,
+    "insightfulness": 5,
+    "completeness": 5,
+    "actionability": 5,
+    "final_score": 5,
+    "feedback": "Evaluation failed: JSON parsing failed: Expecting value: line 1 column 1 (char 0)\nLLM Output:\n```json\n{\n  \"accuracy\": 1,\n  \"insightfulness\": 1,\n  \"completeness\": 2,\n  \"actionability\": 2,\n  \"final_score\": 1,\n  \"feedback\": \"The RAM specification (16GB for RTX 4090) is factually incorrect. The pricing recommendation is not insightful, suggesting no change despite a very low positive review ratio from a tiny sample size. The conflicting positive ratios (0.25 vs 0.5) are confusing and not explained.\"\n}\n```"
+  },
+  "rule_score": 10,
+  "report": {
+    "product": {
+      "product_id": "mock-mock-rtx-4090-xyz",
+      "title": "Mock Product mock-mock-rtx-4090-xyz",
+      "specs": {
+        "gpu": "RTX 4090",
+        "ram": "16GB"
+      },
+      "marketplace": "mock_market",
+      "url": "https://mocksite.com/product/mock-rtx-4090-xyz",
+      "base_price": 1949.0
+    },
+    "sentiment": {
+      "n_reviews": 4,
+      "positive_ratio": 0.25,
+      "top_issues": [
+        "shipping"
+      ]
+    },
+    "pricing": {
+      "recommended_price": 1949.0,
+      "base_price": 1949.0,
+      "positive_ratio": 0.5
+    },
+    "trace_id": "c28a2f50-e24a-437e-80d9-2fdf8dff1525",
+    "session_id": "f7383e0f-d27f-4e92-bcb0-18bf84737e0f"
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "id": "case_2",
+    "mission_input": "https://mocksite.com/product/rtx-4080-alpha",
+    "expected": {
+        "product_contains": ["4080"],
+        "must_include_sections": ["sentiment", "pricing"],
+        "max_price": 2500
+    }
+}
