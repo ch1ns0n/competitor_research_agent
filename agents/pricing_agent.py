@@ -40,14 +40,16 @@ def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
             "positive_ratio": pos_ratio
         }
 
-        # --- NEW: simpan ke memory ---
+        # --- store into persistent vector/metadata memory ---
         pm = PricingMemory()
-        pm.add({
-            "product_id": product.get("product_id"),
-            "recommended_price": recommended,
-            "base_price": base_price,
-            "positive_ratio": pos_ratio
-        })
+        pm.save(
+            key=product.get("product_id"),
+            metadata={
+                "recommended_price": recommended,
+                "base_price": base_price,
+                "positive_ratio": pos_ratio,
+            }
+        )
 
         return {"status":"ok","result": result}
 

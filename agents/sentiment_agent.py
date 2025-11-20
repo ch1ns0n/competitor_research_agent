@@ -3,8 +3,9 @@ from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 from sklearn.linear_model import LogisticRegression
 from memory_bank.sentiment_memory import SentimentMemory
+from infra.embedding import embed_text
 import numpy as np
-import uvicorn, os
+import uvicorn, os, json
 
 API_KEY = os.getenv("A2A_API_KEY", "secret")
 app = FastAPI(title="Sentiment Agent (A2A)")
@@ -13,7 +14,7 @@ class A2AReq(BaseModel):
     task: str
     input: dict
 
-# Build small embedder + toy classifier once
+# Static embedder + toy model
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 X = embedder.encode(["good","excellent","bad","terrible"])
 y = [1,1,0,0]
@@ -26,20 +27,22 @@ def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
     if req.task == "analyze_reviews":
-        reviews = req.input.get("reviews",[])
+        reviews = req.input.get("reviews", [])
         texts = [r.get("text","") for r in reviews]
+        product_id = req.input.get("product_id")
 
         if not texts:
-            result = {"n_reviews":0,"positive_ratio":0.0,"top_issues":[]}
+            result = {
+                "n_reviews": 0,
+                "positive_ratio": 0.0,
+                "top_issues": []
+            }
 
-            # tetap bisa simpan baseline
             sm = SentimentMemory()
-            sm.add({
-                "product_id": req.input.get("product_id"),
-                "review_text": "",
-                "sentiment_score": 0,
-                "top_issues": [],
-            })
+            sm.save(
+                key=product_id,
+                metadata=result
+            )
 
             return {"status":"ok","result": result}
 
@@ -58,14 +61,14 @@ def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
             "top_issues": list(set(issues))
         }
 
-        # --- NEW: simpan ke memory ---
+        # SAVE TO VECTOR MEMORY (FAISS)
         sm = SentimentMemory()
-        sm.add({
-            "product_id": req.input.get("product_id"),
-            "review_text": "\n".join(texts),
-            "sentiment_score": pos_ratio,
-            "top_issues": list(set(issues)),
-        })
+        vector = embed_text("\n".join(texts))
+        sm.save(
+            key=product_id,
+            metadata=result,
+            embedding=vector
+        )
 
         return {"status":"ok","result": result}
 
@@ -75,10 +78,10 @@ def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
 def card():
     base = os.getenv("AGENT_BASE_URL","http://localhost:8002")
     return {
-        "name":"sentiment_agent",
-        "version":"0.1.0",
-        "description":"Sentiment Agent",
-        "capabilities":["analyze_reviews"],
+        "name": "sentiment_agent",
+        "version": "0.1.0",
+        "description": "Sentiment Agent",
+        "capabilities": ["analyze_reviews"],
         "url": base,
         "securitySchemes": {"x-api-key":{"type":"apiKey"}}
     }

@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request, Header, HTTPException
 from pydantic import BaseModel
 from memory_bank.product_memory import ProductMemory
+from infra.embedding import embed_text
 import uvicorn, time, random
 import json, os
 
@@ -32,7 +33,12 @@ def fetch_product_page(req: FetchProductReq):
     }
     
     pm = ProductMemory()
-    pm.add(mock)
+    vector = embed_text(json.dumps(mock, ensure_ascii=False))
+    pm.save(
+        key=mock["product_id"],
+        metadata=mock,
+        embedding=vector
+        )
     
     return {"status":"ok","product": mock}
 
