@@ -1,20 +1,13 @@
 from abc import ABC, abstractmethod
-from typing import Any, List, Dict
+from typing import Any, Dict, List
 
 class BaseMemory(ABC):
-    """Abstract memory interface for concrete memory stores."""
-
     @abstractmethod
-    def add(self, metadata: Dict[str, Any], embedding: List[float] = None) -> int:
-        """
-        Add one record. Should return the assigned integer id.
-        If embedding is None, implementation may create embedding from metadata.
-        """
+    def save(self, key: str, metadata: Dict[str, Any], embedding=None) -> int:
+        """Store metadata and optional embedding. Return assigned id (int)."""
         raise NotImplementedError
 
     @abstractmethod
-    def search(self, query_embedding: List[float], top_k: int = 5):
-        """
-        Search and return list of (metadata, distance) pairs.
-        """
+    def search(self, query_embedding, top_k: int = 5) -> List[Dict[str, Any]]:
+        """Return list of metadata (with distance optionally)"""
         raise NotImplementedError

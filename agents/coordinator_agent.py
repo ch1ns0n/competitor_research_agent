@@ -1,86 +1,110 @@
-import os
-import requests
-import json
-
+import os, json, logging, requests
+from infra.embedding import embed_text, embed_texts
 from memory_bank.product_memory import ProductMemory
 from memory_bank.sentiment_memory import SentimentMemory
 from memory_bank.pricing_memory import PricingMemory
 
-
 API_KEY = os.getenv("A2A_API_KEY", "secret")
+REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL", "http://localhost:9000")
+logging.basicConfig(level=os.getenv("LOG_LEVEL","INFO"))
+logger = logging.getLogger("coordinator")
 
 class RemoteCoordinator:
-
-    def __init__(self):
+    def __init__(self, registry_url: str = REGISTRY_URL):
+        self.registry_url = registry_url
         self.product_mem = ProductMemory()
         self.sentiment_mem = SentimentMemory()
         self.pricing_mem = PricingMemory()
 
-    def discover(self, agent_name):
-        # In production this hits the registry.
-        r = requests.get(f"http://localhost:9000/agents/{agent_name}")
+    def discover(self, agent_name: str):
+        r = requests.get(f"{self.registry_url}/agents/{agent_name}", timeout=5)
         r.raise_for_status()
-        return r.json()
+        card = r.json()
+        # Normalize keys
+        base = card.get("agent_url") or card.get("agent_card_url") or card.get("url")
+        return {"agent_url": base}
 
-    def call_agent(self, card, task, payload):
-        base_url = card["agent_url"]
-        exec_url = base_url.rstrip("/") + "/a2a/execute"
-        r = requests.post(
-            exec_url,
-            json={"task": task, "input": payload},
-            headers={"X-API-KEY": API_KEY}
-        )
+    def call_agent(self, card, task, input_payload):
+        base = card.get("agent_url")
+        if not base:
+            raise RuntimeError("missing agent url")
+        exec_url = base.rstrip("/") + "/a2a/execute"
+        headers = {"X-API-KEY": API_KEY}
+        payload = {"task": task, "input": input_payload}
+        r = requests.post(exec_url, json=payload, headers=headers, timeout=30)
         r.raise_for_status()
         return r.json()
 
     def run(self, product_id: str):
+        logger.info("Run pipeline for %s", product_id)
         url = f"https://mocksite.com/product/{product_id}"
 
-        # --------- SCRAPER ---------
-        scraper_card = self.discover("scraper_agent")
-        product_resp = self.call_agent(scraper_card, "fetch_product_page", {"url": url})
-        product = product_resp["product"]
+        # 1. SCRAPER
+        scraper = self.discover("scraper_agent")
+        prod_resp = self.call_agent(scraper, "fetch_product_page", {"url": url})
+        product = prod_resp.get("product", {})
+        rev_resp = self.call_agent(scraper, "fetch_reviews", {"product_id": product.get("product_id")})
+        reviews = rev_resp.get("reviews", [])
 
-        reviews_resp = self.call_agent(scraper_card, "fetch_reviews", {"product_id": product_id})
-        reviews = reviews_resp.get("reviews", [])
+        # 2. Compute embeddings centrally
+        product_text = (product.get("title","") + " " + json.dumps(product.get("specs", {}))).strip()
+        product_emb = embed_text(product_text)
+        review_texts = [r.get("text","") for r in reviews]
+        agg_review_text = " ".join(review_texts) if review_texts else ""
+        agg_review_emb = embed_text(agg_review_text) if agg_review_text else None
 
-        # Save memory
-        self.product_mem.save(product_id, product)
+        # 3. Persist product + aggregated review to memory
+        try:
+            self.product_mem.save(product.get("product_id"), product, embedding=product_emb)
+            if agg_review_emb is not None:
+                self.sentiment_mem.save(product.get("product_id"), {"n_reviews": len(review_texts)}, embedding=agg_review_emb)
+        except Exception as e:
+            logger.exception("persist initial memories failed: %s", e)
 
-        # --------- SENTIMENT ---------
+        # 4. Sentiment
         sentiment_card = self.discover("sentiment_agent")
-        sentiment_resp = self.call_agent(sentiment_card, "analyze_reviews", {"reviews": reviews})
-        sentiment = sentiment_resp.get("result", {})
+        sent_resp = self.call_agent(sentiment_card, "analyze_reviews", {"product_id": product.get("product_id"), "reviews": reviews})
+        sentiment = sent_resp.get("result", {})
+        sent_summary = f"pos_ratio={sentiment.get('positive_ratio')} issues={','.join(sentiment.get('top_issues',[]))}"
+        sent_emb = embed_text(sent_summary)
+        try:
+            self.sentiment_mem.save(product.get("product_id"), sentiment, embedding=sent_emb)
+        except Exception:
+            logger.exception("persist sentiment failed")
 
-        self.sentiment_mem.save(product_id, sentiment)
-
-        # --------- PRICING ---------
+        # 5. Pricing
         pricing_card = self.discover("pricing_agent")
-        pricing_resp = self.call_agent(
-            pricing_card,
-            "recommend_price",
-            {"product": product, "reviews": reviews}
-        )
-        pricing = pricing_resp.get("result", {})
+        price_resp = self.call_agent(pricing_card, "recommend_price", {"product": product, "reviews": reviews})
+        pricing = price_resp.get("result", {})
+        price_emb = embed_text(f"{pricing.get('recommended_price')} ratio={pricing.get('positive_ratio')}")
+        try:
+            self.pricing_mem.save(product.get("product_id"), pricing, embedding=price_emb)
+        except Exception:
+            logger.exception("persist pricing failed")
 
-        self.pricing_mem.save(product_id, pricing)
+        # 6. Query memories for context
+        try:
+            similar_products = self.product_mem.search(product_emb, top_k=5)
+            recent_sentiments = self.sentiment_mem.search(sent_emb, top_k=5)
+            pricing_history = self.pricing_mem.search(price_emb, top_k=5)
+        except Exception as e:
+            logger.exception("memory search failed: %s", e)
+            similar_products, recent_sentiments, pricing_history = [], [], []
 
-        # --------- MEMORY LOOKUP ---------
-        similar_products = self.product_mem.search(product_id, top_k=5)
-        past_sentiments = self.sentiment_mem.search(product_id, top_k=5)
-        past_pricing = self.pricing_mem.search(product_id, top_k=5)
-
-        return {
+        report = {
             "product": product,
+            "reviews_count": len(reviews),
             "sentiment": sentiment,
             "pricing": pricing,
-            "similar_products": similar_products,
-            "sentiment_history": past_sentiments,
-            "pricing_history": past_pricing
+            "memory_insights": {
+                "similar_products": similar_products,
+                "recent_sentiments": recent_sentiments,
+                "pricing_history": pricing_history
+            }
         }
-
+        return report
 
 if __name__ == "__main__":
-    co = RemoteCoordinator()
-    res = co.run("rtx-4090-xyz")
-    print(json.dumps(res, indent=2))
+    rc = RemoteCoordinator()
+    out = rc.run("rtx-4090-xyz")
+    print(json.dumps(out, indent=2))

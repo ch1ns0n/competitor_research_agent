@@ -1,69 +1,33 @@
-import os
-import json
 import numpy as np
-import faiss
+from typing import Dict, Any, List
+from memory_bank.base_memory import BaseMemory
+from memory_bank.faiss_memory import FaissMemoryIndex
+from memory_bank.metadata_utils import append_jsonl, get_by_indices, load_all
 
+DEFAULT_DIM = 384
+DEFAULT_INDEX_PATH = "memory_bank/metadata/product.faiss"
+DEFAULT_METADATA_PATH = "memory_bank/metadata/product.jsonl"
 
-class ProductMemory:
-    def __init__(
-        self,
-        dim=768,
-        index_path="memory_bank/storage/faiss_product.index",
-        metadata_path="memory_bank/storage/product_metadata.jsonl"
-    ):
+class ProductMemory(BaseMemory):
+    def __init__(self, dim=DEFAULT_DIM, index_path=DEFAULT_INDEX_PATH, metadata_path=DEFAULT_METADATA_PATH):
         self.dim = dim
-        self.index_path = index_path
-        self.metadata_path = metadata_path
+        self.index = FaissMemoryIndex(dim=dim, index_path=index_path)
+        self.meta_path = metadata_path
 
-        # Load or create FAISS index
-        if os.path.exists(index_path):
-            self.index = faiss.read_index(index_path)
-        else:
-            self.index = faiss.IndexFlatL2(dim)
+    def save(self, key: str, metadata: Dict[str, Any], embedding=None) -> int:
+        """
+        Save metadata (append JSONL) and vector (embedding) with assigned id.
+        """
+        # append metadata -> assigned id
+        assigned = append_jsonl(self.meta_path, {"key": key, "metadata": metadata})
+        if embedding is not None:
+            self.index.add(np.asarray(embedding, dtype="float32"), int(assigned))
+        return assigned
 
-        # Load metadata into RAM (list of dict)
-        self.metadata = []
-        if os.path.exists(metadata_path):
-            with open(metadata_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    self.metadata.append(json.loads(line))
-
-    # --------------------------------------------------------
-    # Save a new product to FAISS + JSONL disk metadata
-    # --------------------------------------------------------
-    def save(self, product_id: str, product_data: dict, embedding: np.ndarray = None):
-        # no embedding → cannot index
-        if embedding is None:
-            print("[ProductMemory] WARNING: No embedding provided → storing metadata only.")
-        else:
-            if embedding.ndim == 1:
-                embedding = embedding.reshape(1, -1)
-            self.index.add(embedding)
-            faiss.write_index(self.index, self.index_path)
-
-        record = {
-            "id": product_id,
-            "data": product_data
-        }
-        self.metadata.append(record)
-        with open(self.metadata_path, "a", encoding="utf-8") as f:
-            f.write(json.dumps(record) + "\n")
-
-    # --------------------------------------------------------
-    # Search nearest products by vector similarity
-    # --------------------------------------------------------
-    def search(self, query_embedding: np.ndarray, top_k=5):
-        if len(self.metadata) == 0 or self.index.ntotal == 0:
-            return []
-
-        if query_embedding.ndim == 1:
-            query_embedding = query_embedding.reshape(1, -1)
-
-        distances, idxs = self.index.search(query_embedding, top_k)
-
-        results = []
-        for i in idxs[0]:
-            if i < len(self.metadata):
-                results.append(self.metadata[i])
-
-        return results
+    def search(self, query_embedding, top_k=5) -> List[Dict[str, Any]]:
+        distances, ids = self.index.search(query_embedding, top_k)
+        metas = get_by_indices(self.meta_path, ids)
+        result = []
+        for m, d, idx in zip(metas, distances, ids):
+            result.append({"id": idx, "distance": d, "record": m})
+        return result
