@@ -25,7 +25,12 @@ def scrape_product_reviews(product_id: str, page: int = 1, proxies: Optional[dic
     """
     Scrape review page for given product_id (ASIN). Try requests first, fallback to Playwright.
     """
-    url = f"https://www.amazon.com/product-reviews/{product_id}/?pageNumber={page}"
+    url = (
+        f"https://www.amazon.com/product-reviews/{product_id}"
+        f"/?pageNumber={page}"
+        "&reviewerType=all_reviews"
+        "&filterByStar=all_stars"
+        )
     try:
         resp = smart_get(
             url,
