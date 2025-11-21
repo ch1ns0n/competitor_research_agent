@@ -37,7 +37,10 @@ class RemoteCoordinator:
 
     def run(self, product_id: str):
         logger.info("Run pipeline for %s", product_id)
-        url = f"https://mocksite.com/product/{product_id}"
+        if len(product_id) == 10 and product_id.isalnum():
+            url = f"https://www.amazon.com/dp/{product_id}"
+        else:
+            url = f"https://mocksite.com/product/{product_id}"
 
         # 1. SCRAPER
         scraper = self.discover("scraper_agent")
@@ -103,8 +106,35 @@ class RemoteCoordinator:
             }
         }
         return report
+    
+    def run_search(self, query: str, page:int = 1):
+        # 1. Temukan scraper agent
+        scraper = self.discover("scraper_agent")
+        
+        # 2. Panggil search endpoint
+        resp = self.call_agent(
+            scraper,
+            "search_products",
+            {"query": query, "page": page}
+        )
+
+        asins = resp.get("asins", [])
+        results = []
+
+        # 3. Loop semua ASIN
+        for asin in asins:
+            print(f"\n⚙️ Running pipeline for -> {asin}")
+            out = self.run(asin)
+            results.append(out)
+
+        return {
+            "query": query,
+            "found": len(asins),
+            "asins": asins,
+            "results": results
+        }
 
 if __name__ == "__main__":
     rc = RemoteCoordinator()
-    out = rc.run("rtx-4090-xyz")
+    out = rc.run_search("rtx 4090", page=1)
     print(json.dumps(out, indent=2))
