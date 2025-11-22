@@ -9,3 +9,6 @@ html = resp.text
 print(html[:2000])
 
 print("data-hook review:", "data-hook='review'" in html)
+
+resp = smart_get(url)
+print(resp.url)
