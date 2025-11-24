@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from memory_bank.product_memory import ProductMemory
 from infra.embedding import embed_text
 from scrapers.product_page import scrape_product_page
-from scrapers.review_page import scrape_product_reviews
+from scrapers.review_page import scrape_product_reviews_async
 from scrapers.search_page import scrape_search_results
 
 API_KEY = os.getenv("A2A_API_KEY", "secret")
@@ -86,13 +86,13 @@ def fetch_product_page(req: FetchProductReq):
 
 
 @app.post("/fetch_reviews")
-def fetch_reviews(req: FetchReviewsReq):
+async def fetch_reviews(req: FetchReviewsReq):
     """Amazon or mock review fetcher."""
     pid = req.product_id
     
     # Amazon review scrape
     if pid and not pid.startswith("mock"):
-        reviews = scrape_product_reviews(pid, page=req.page)
+        reviews = await scrape_product_reviews_async(req.product_id)
         # expected return list of dicts with "text" and "rating"
         return {"status": "ok", "reviews": reviews}
     
@@ -118,7 +118,7 @@ async def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
     if req.task == "fetch_reviews":
         pid = req.input.get("product_id")
         page = req.input.get("page", 1)
-        return fetch_reviews(FetchReviewsReq(product_id=pid, page=page))
+        return await fetch_reviews(FetchReviewsReq(product_id=pid, page=page))
 
     # NEW TASK
     if req.task == "search_products":

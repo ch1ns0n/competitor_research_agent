@@ -5,12 +5,12 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from scoring import simple_rule_based_check
-from agents.coordinator_agent import RemoteCoordinator   # sesuai nama file kamu
+from agents.coordinator_agent import RemoteCoordinator
 
 # --- Google Gemini ---
 from google.genai import Client
 
-GEMINI_MODEL = "gemini-2.5-flash"   # kamu bisa ganti pro nanti
+GEMINI_MODEL = "gemini-2.5-flash"
 client = Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 BASE = Path(__file__).resolve().parent

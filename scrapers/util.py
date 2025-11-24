@@ -58,24 +58,42 @@ def is_blocked_html(html: str) -> bool:
 
 def parse_price(text: Optional[str]) -> Optional[float]:
     """
-    Convert price-like string to float. Returns None if fails.
-    Examples: "$1,949.00", "US $1,949.00", "1,949.00"
+    Convert price-like string to float safely.
+    If numeric result is unrealistic (<20 or >5000), return None.
+    Examples:
+    "$1,949.00", "1,949.00", "US$ 2999", "$2,999 – $3,499"
     """
     if not text:
         return None
-    # Remove currency symbols, words, keep digits, dot, comma
+
+    # Keep only digits, dot, comma
     s = re.sub(r"[^\d\.,]", "", text)
-    # If both comma and dot present, assume comma thousands -> remove commas
+
+    # Case: "1,299.00" → OK
     if "," in s and "." in s:
         s = s.replace(",", "")
-    # If only commas present and no dot, remove commas (they're thousands sep)
+
+    # Case: "1.299,00" (EU format)
+    elif s.count(".") > 1 and "," in s:
+        s = s.replace(".", "").replace(",", ".")
+
+    # Case: only commas → thousands separator
     elif "," in s and "." not in s:
         s = s.replace(",", "")
+
     s = s.strip()
+
     try:
-        return float(s)
-    except Exception:
+        val = float(s)
+    except:
         return None
+
+    # --- Sanity check (GPU range) ---
+    if val < 20 or val > 5000:
+        print(f"[!] Price out of range ({val}) → ignoring")
+        return None
+
+    return val
 
 def extract_asin_from_url(url: str) -> Optional[str]:
     """
