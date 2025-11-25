@@ -117,12 +117,11 @@ class RemoteCoordinator:
         lines.append(f"💰 Pricing Recommendation")
         lines.append(f"- Suggested price: ${my_price}")
 
-        if pos_ratio < 0.70:
-            lines.append("- Consider price reduction due to lower market sentiment.")
-        elif pos_ratio > 0.85:
-            lines.append("- High customer approval — maintaining or increasing price is justified.")
+        reason = pricing.get("business_reason", [])
+        if reason:
+            lines.append(f"- {reason[0]}")
         else:
-            lines.append("- Price is acceptable based on market positioning.")
+            lines.append("- Pricing logic could not generate a recommendation.")
 
         lines.append("")
         lines.append("📎 Business Summary")
@@ -223,9 +222,15 @@ class RemoteCoordinator:
         price_resp = self.call_agent(
             pricing_card,
             "recommend_price",
-            {"product": product, "reviews": reviews}
+            {
+                "product": product,
+                "reviews": reviews,
+                "sentiment_score": sentiment.get("positive_ratio", 0.5)
+            }
         )
         pricing = price_resp.get("result", {})
+        
+        pricing["sentiment_score"] = sentiment.get("positive_ratio")
 
         price_emb = embed_text(
             f"{pricing.get('recommended_price')} ratio={pricing.get('positive_ratio')}"

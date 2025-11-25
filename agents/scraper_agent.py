@@ -140,7 +140,7 @@ async def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
     if req.task == "search_products":
         query = req.input.get("query")
         page = req.input.get("page", 1)
-        asins = scrape_search_results(query, page=page)
+        asins = await scrape_search_results(query, page=page)
         
         logger.info(f"[SEARCH] Returned {len(asins)} ASINs")
         return {"status": "ok", "asins": asins}
