@@ -6,6 +6,9 @@ from infra.embedding import embed_text
 from scrapers.product_page import scrape_product_page
 from scrapers.review_page import scrape_product_reviews_async
 from scrapers.search_page import scrape_search_results
+from scrapers.logger import get_logger
+
+logger = get_logger("scraper_agent")
 
 API_KEY = os.getenv("A2A_API_KEY", "secret")
 app = FastAPI(title="Scraper Agent (A2A + MCP)")
@@ -24,6 +27,8 @@ class FetchReviewsReq(BaseModel):
 def handle_real_amazon_scrape(url: str):
     """Scrape Amazon product page and persist to vector memory."""
     # 1. scrape
+    logger.info(f"[PRODUCT] Begin scrape: {url}")
+    
     data = scrape_product_page(url)
     product = {
         "product_id": data.get("product_id"),
@@ -44,12 +49,15 @@ def handle_real_amazon_scrape(url: str):
         embedding=vector
         )
     
+    logger.info(f"[PRODUCT] Stored: {product['product_id']}")
     return product
 
 
 def handle_mock_scrape(url: str):
     """Fallback old mock behavior for non-Amazon targets."""
     import random
+    
+    logger.warning(f"[PRODUCT] MOCK scrape: {url}")
     
     pid = "mock-" + url.rstrip("/").split("/")[-1]
     mock = {
@@ -69,6 +77,7 @@ def handle_mock_scrape(url: str):
         embedding=vector
         )
     
+    logger.info(f"[PRODUCT] Stored MOCK: {pid}")
     return mock
 
 
@@ -90,10 +99,13 @@ async def fetch_reviews(req: FetchReviewsReq):
     """Amazon or mock review fetcher."""
     pid = req.product_id
     
+    logger.info(f"[REVIEWS] Start → {pid}")
+    
     # Amazon review scrape
     if pid and not pid.startswith("mock"):
         reviews = await scrape_product_reviews_async(req.product_id)
         # expected return list of dicts with "text" and "rating"
+        logger.info(f"[REVIEWS] {pid} → {len(reviews)} reviews fetched")
         return {"status": "ok", "reviews": reviews}
     
     # Mock fallback
@@ -103,6 +115,8 @@ async def fetch_reviews(req: FetchReviewsReq):
         {"id": f"r{pid}_3", "text": "Shipping slow, packaging damaged", "rating": 2},
         {"id": f"r{pid}_4", "text": "Driver issues sometimes", "rating": 3}
         ]
+    
+    logger.warning(f"[REVIEWS] MOCK returned for {pid}")
     return {"status": "ok", "reviews": reviews}
 
 
@@ -110,7 +124,9 @@ async def fetch_reviews(req: FetchReviewsReq):
 async def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
-
+    
+    logger.info(f"[A2A] Task received → {req.task}")
+    
     if req.task == "fetch_product_page":
         url = req.input.get("url")
         return fetch_product_page(FetchProductReq(url=url))
@@ -125,8 +141,11 @@ async def a2a_execute(req: A2AReq, x_api_key: str = Header(None)):
         query = req.input.get("query")
         page = req.input.get("page", 1)
         asins = scrape_search_results(query, page=page)
+        
+        logger.info(f"[SEARCH] Returned {len(asins)} ASINs")
         return {"status": "ok", "asins": asins}
-
+    
+    logger.warning(f"[A2A] Unknown task → {req.task}")
     return {"status": "error", "msg": "unknown task"}
 
 
