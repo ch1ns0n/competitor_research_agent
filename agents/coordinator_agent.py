@@ -1,5 +1,7 @@
 import os
 import json
+import time
+import uuid
 import requests
 
 from infra.embedding import embed_text
@@ -9,12 +11,75 @@ from memory_bank.pricing_memory import PricingMemory
 
 from scrapers.logger import get_logger
 
-
 API_KEY = os.getenv("A2A_API_KEY", "secret")
 REGISTRY_URL = os.getenv("AGENT_REGISTRY_URL", "http://localhost:9000")
-
 logger = get_logger("coordinator_agent")
 
+
+# ============================================================
+#  Tracing Utilities
+# ============================================================
+
+class PipelineContext:
+    """Shared context for each product pipeline."""
+    def __init__(self, product_id: str):
+        self.trace_id = str(uuid.uuid4())[:8]
+        self.product_id = product_id
+        self.stage = None
+
+    def log(self, message: str, **extra):
+        payload = {
+            "trace_id": self.trace_id,
+            "product_id": self.product_id,
+            "stage": self.stage,
+            "msg": message,
+        }
+        payload.update(extra)
+        logger.info(json.dumps(payload))
+
+
+def trace_stage(stage_name):
+    """Decorator untuk logging start/end + duration untuk tiap stage pipeline."""
+    def wrapper(fn):
+        def inner(self, ctx: PipelineContext, *args, **kwargs):
+            ctx.stage = stage_name
+            start = time.time()
+            ctx.log(f"[START] {stage_name}")
+            try:
+                result = fn(self, ctx, *args, **kwargs)
+            except Exception as e:
+                ctx.log(f"[ERROR] {stage_name}", error=str(e))
+                raise
+            finally:
+                duration = round((time.time() - start) * 1000, 2)
+                ctx.log(f"[END] {stage_name}", duration_ms=duration)
+            return result
+        return inner
+    return wrapper
+
+
+def trace_a2a_call(task_name):
+    """Decorator untuk logging panggilan A2A antara agents."""
+    def wrapper(fn):
+        def inner(self, ctx: PipelineContext, *args, **kwargs):
+            ctx.log(f"[A2A] CALL {task_name}")
+            start = time.time()
+            try:
+                result = fn(self, ctx, *args, **kwargs)
+                return result
+            except Exception as e:
+                ctx.log(f"[ERROR] A2A {task_name}", error=str(e))
+                raise
+            finally:
+                duration = round((time.time() - start) * 1000, 2)
+                ctx.log(f"[A2A] FINISH {task_name}", duration_ms=duration)
+        return inner
+    return wrapper
+
+
+# ============================================================
+#  Coordinator
+# ============================================================
 
 class RemoteCoordinator:
     def __init__(self, registry_url: str = REGISTRY_URL):
@@ -24,54 +89,150 @@ class RemoteCoordinator:
         self.sentiment_mem = SentimentMemory()
         self.pricing_mem = PricingMemory()
 
-    # ------------------------------------------------------------
-    #  Discover agent from registry
-    # ------------------------------------------------------------
-    def discover(self, agent_name: str):
-        logger.info(f"[DISCOVER] Looking up agent `{agent_name}`")
+    # -----------------------------
+    # Discover agent
+    # -----------------------------
+    @trace_a2a_call("discover_agent")
+    def discover(self, ctx: PipelineContext, agent_name: str):
+        ctx.log(f"[DISCOVER] Looking up agent `{agent_name}`")
 
         r = requests.get(f"{self.registry_url}/agents/{agent_name}", timeout=5)
         r.raise_for_status()
         card = r.json()
 
-        base = (
-            card.get("agent_url")
-            or card.get("agent_card_url")
-            or card.get("url")
-        )
+        base = card.get("agent_url") or card.get("url")
+        ctx.log(f"[DISCOVER] Found `{agent_name}`", url=base)
 
-        logger.info(f"[DISCOVER] Found `{agent_name}` at {base}")
         return {"agent_url": base}
 
-    # ------------------------------------------------------------
-    #  Execute task on remote agent
-    # ------------------------------------------------------------
-    def call_agent(self, card, task: str, input_payload: dict):
+    # -----------------------------
+    # Remote call
+    # -----------------------------
+    @trace_a2a_call("call_agent")
+    def call_agent(self, ctx: PipelineContext, card, task: str, input_payload: dict):
         base = card.get("agent_url")
-        if not base:
-            logger.error(f"[CALL] FAILED task={task} – no agent URL")
-            raise RuntimeError("missing agent url")
-
         exec_url = base.rstrip("/") + "/a2a/execute"
-        logger.info(f"[CALL] POST {task} → {exec_url}")
+
+        ctx.log(f"[CALL] POST {task}", url=exec_url)
 
         payload = {"task": task, "input": input_payload}
         headers = {"X-API-KEY": API_KEY}
 
-        response = requests.post(
-            exec_url,
-            json=payload,
-            headers=headers,
-            timeout=30
-        )
+        response = requests.post(exec_url, json=payload, headers=headers, timeout=30)
         response.raise_for_status()
 
-        logger.info(f"[CALL] SUCCESS task={task}")
+        ctx.log(f"[CALL] SUCCESS {task}")
         return response.json()
 
-    # ------------------------------------------------------------
-    #  Full analysis pipeline
-    # ------------------------------------------------------------
+    # ============================================================
+    #  Pipeline Stages
+    # ============================================================
+
+    @trace_stage("SCRAPER")
+    def stage_scraper(self, ctx, product_id, url):
+        scraper = self.discover(ctx, "scraper_agent")
+
+        prod_resp = self.call_agent(ctx, scraper, "fetch_product_page", {"url": url})
+        product = prod_resp.get("product", {})
+
+        rev_resp = self.call_agent(
+            ctx, scraper, "fetch_reviews", {"product_id": product.get("product_id")}
+        )
+        reviews = rev_resp.get("reviews", [])
+
+        return product, reviews
+
+    @trace_stage("EMBEDDINGS")
+    def stage_embeddings(self, ctx, product, reviews):
+        product_text = (
+            product.get("title", "") + " " + json.dumps(product.get("specs", {}))
+        ).strip()
+        product_emb = embed_text(product_text)
+
+        review_texts = [r.get("text", "") for r in reviews]
+        agg_review_text = " ".join(review_texts).strip()
+        agg_review_emb = embed_text(agg_review_text) if agg_review_text else None
+
+        return product_emb, agg_review_emb
+
+    @trace_stage("MEMORY_SAVE")
+    def stage_memory_store(self, ctx, product, reviews, product_emb, agg_emb):
+        try:
+            self.product_mem.save(product.get("product_id"), product, embedding=product_emb)
+
+            if agg_emb is not None:
+                self.sentiment_mem.save(
+                    product.get("product_id"), {"n_reviews": len(reviews)}, embedding=agg_emb
+                )
+        except Exception as e:
+            ctx.log("[ERROR] Failed saving memories", error=str(e))
+
+    @trace_stage("SENTIMENT")
+    def stage_sentiment(self, ctx, product, reviews):
+        card = self.discover(ctx, "sentiment_agent")
+        resp = self.call_agent(
+            ctx,
+            card,
+            "analyze_reviews",
+            {"product_id": product.get("product_id"), "reviews": reviews},
+        )
+        sentiment = resp.get("result", {})
+
+        # store sentiment embedding
+        summary = (
+            f"pos_ratio={sentiment.get('positive_ratio')} "
+            f"issues={','.join(sentiment.get('top_issues', []))}"
+        )
+        emb = embed_text(summary)
+
+        try:
+            self.sentiment_mem.save(product.get("product_id"), sentiment, embedding=emb)
+        except:
+            pass
+
+        return sentiment, emb
+
+    @trace_stage("PRICING")
+    def stage_pricing(self, ctx, product, reviews, sentiment):
+        card = self.discover(ctx, "pricing_agent")
+        resp = self.call_agent(
+            ctx,
+            card,
+            "recommend_price",
+            {
+                "product": product,
+                "reviews": reviews,
+                "sentiment_score": sentiment.get("positive_ratio", 0.5),
+            },
+        )
+        pricing = resp.get("result", {})
+        pricing["sentiment_score"] = sentiment.get("positive_ratio")
+
+        emb = embed_text(f"{pricing.get('recommended_price')} ratio={pricing.get('positive_ratio')}")
+
+        try:
+            self.pricing_mem.save(product.get("product_id"), pricing, embedding=emb)
+        except:
+            pass
+
+        return pricing, emb
+
+    @trace_stage("MEMORY_INSIGHTS")
+    def stage_memory_insights(self, ctx, product_emb, sent_emb, pricing_emb):
+        try:
+            similar_products = self.product_mem.search(product_emb, top_k=5)
+            recent_sentiments = self.sentiment_mem.search(sent_emb, top_k=5)
+            pricing_history = self.pricing_mem.search(pricing_emb, top_k=5)
+        except Exception as e:
+            ctx.log("[ERROR] Memory search", error=str(e))
+            return [], [], []
+
+        return similar_products, recent_sentiments, pricing_history
+
+    # ============================================================
+    #  Report Builder
+    # ============================================================
+
     def generate_business_report(self, analysis: dict) -> str:
         product = analysis.get("product", {})
         sentiment = analysis.get("sentiment", {})
@@ -87,15 +248,14 @@ class RemoteCoordinator:
         avg_competitor_price = pricing.get("competitor_average_price")
 
         lines = []
-
-        lines.append(f"📌 PRODUCT ANALYSIS REPORT")
+        lines.append("📌 PRODUCT ANALYSIS REPORT")
         lines.append(f"Product: {product.get('title')}")
         lines.append(f"Marketplace: {product.get('marketplace')}")
         lines.append(f"Price: ${product.get('price')}")
         lines.append(f"Rating: {product.get('rating')} ⭐")
         lines.append("")
 
-        lines.append(f"📊 Market Sentiment")
+        lines.append("📊 Market Sentiment")
         lines.append(f"- Reviews analyzed: {analysis.get('reviews_count')}")
         lines.append(f"- Positive sentiment: {pos_ratio * 100:.1f}%")
 
@@ -105,7 +265,7 @@ class RemoteCoordinator:
             lines.append("- No major customer concerns detected")
 
         lines.append("")
-        lines.append(f"⚔️ Competitive Landscape")
+        lines.append("⚔️ Competitive Landscape")
         lines.append(f"- Similar competing products found: {competitors_count}")
 
         if avg_competitor_price:
@@ -114,7 +274,7 @@ class RemoteCoordinator:
             lines.append(f"- Competitor average price: ${avg_competitor_price:.2f} ({sign}{diff:.1f}% difference)")
         lines.append("")
 
-        lines.append(f"💰 Pricing Recommendation")
+        lines.append("💰 Pricing Recommendation")
         lines.append(f"- Suggested price: ${my_price}")
 
         reason = pricing.get("business_reason", [])
@@ -128,138 +288,42 @@ class RemoteCoordinator:
         lines.append("This automated agent pipeline collects market data, reviews customer sentiment, compares pricing, and provides a data-backed recommendation for decision making.")
 
         return "\n".join(lines)
-    
-    def run(self, product_id: str):
-        logger.info(f"[RUN] Starting pipeline for {product_id}")
 
-        # Build URL
+    # ============================================================
+    #  Pipeline Runner
+    # ============================================================
+
+    def run(self, product_id: str):
+        ctx = PipelineContext(product_id)
+        ctx.log("[PIPELINE] START")
+
+        # build Amazon URL
         if len(product_id) == 10 and product_id.isalnum():
             url = f"https://www.amazon.com/dp/{product_id}"
         else:
             url = f"https://mocksite.com/product/{product_id}"
 
-        # 1. SCRAPER
-        logger.info("[RUN] Stage 1 → Scraping product & reviews")
-        scraper = self.discover("scraper_agent")
+        # Stage 1 → Scraper
+        product, reviews = self.stage_scraper(ctx, product_id, url)
 
-        prod_resp = self.call_agent(
-            scraper,
-            "fetch_product_page",
-            {"url": url}
-        )
-        product = prod_resp.get("product", {})
+        # Stage 2 → Embeddings
+        product_emb, agg_review_emb = self.stage_embeddings(ctx, product, reviews)
 
-        rev_resp = self.call_agent(
-            scraper,
-            "fetch_reviews",
-            {"product_id": product.get("product_id")}
-        )
-        reviews = rev_resp.get("reviews", [])
+        # Stage 3 → Save to memory
+        self.stage_memory_store(ctx, product, reviews, product_emb, agg_review_emb)
 
-        # 2. Compute embeddings
-        logger.info("[RUN] Stage 2 → Computing embeddings")
+        # Stage 4 → Sentiment
+        sentiment, sent_emb = self.stage_sentiment(ctx, product, reviews)
 
-        product_text = (
-            product.get("title", "") + " " + json.dumps(product.get("specs", {}))
-        ).strip()
+        # Stage 5 → Pricing
+        pricing, pricing_emb = self.stage_pricing(ctx, product, reviews, sentiment)
 
-        product_emb = embed_text(product_text)
-
-        review_texts = [r.get("text", "") for r in reviews]
-        agg_review_text = " ".join(review_texts).strip()
-        agg_review_emb = embed_text(agg_review_text) if agg_review_text else None
-
-        # 3. Store to memory
-        logger.info("[RUN] Stage 3 → Persisting product info to memory")
-
-        try:
-            self.product_mem.save(
-                product.get("product_id"),
-                product,
-                embedding=product_emb,
-            )
-
-            if agg_review_emb is not None:
-                self.sentiment_mem.save(
-                    product.get("product_id"),
-                    {"n_reviews": len(review_texts)},
-                    embedding=agg_review_emb,
-                )
-
-        except Exception as e:
-            logger.exception(f"[ERROR] Failed saving product/sentiment memory: {e}")
-
-        # 4. SENTIMENT AGENT
-        logger.info("[RUN] Stage 4 → Sentiment analysis")
-        
-        sentiment_card = self.discover("sentiment_agent")
-        sent_resp = self.call_agent(
-            sentiment_card,
-            "analyze_reviews",
-            {"product_id": product.get("product_id"), "reviews": reviews}
-        )
-        sentiment = sent_resp.get("result", {})
-
-        sent_summary = (
-            f"pos_ratio={sentiment.get('positive_ratio')} "
-            f"issues={','.join(sentiment.get('top_issues', []))}"
-        )
-        sent_emb = embed_text(sent_summary)
-
-        try:
-            self.sentiment_mem.save(
-                product.get("product_id"),
-                sentiment,
-                embedding=sent_emb,
-            )
-        except Exception as e:
-            logger.exception(f"[ERROR] Failed storing sentiment: {e}")
-
-        # 5. PRICING AGENT
-        logger.info("[RUN] Stage 5 → Pricing recommendation")
-
-        pricing_card = self.discover("pricing_agent")
-        price_resp = self.call_agent(
-            pricing_card,
-            "recommend_price",
-            {
-                "product": product,
-                "reviews": reviews,
-                "sentiment_score": sentiment.get("positive_ratio", 0.5)
-            }
-        )
-        pricing = price_resp.get("result", {})
-        
-        pricing["sentiment_score"] = sentiment.get("positive_ratio")
-
-        price_emb = embed_text(
-            f"{pricing.get('recommended_price')} ratio={pricing.get('positive_ratio')}"
+        # Stage 6 → Memory Insights
+        similar_products, recent_sentiments, pricing_history = self.stage_memory_insights(
+            ctx, product_emb, sent_emb, pricing_emb
         )
 
-        try:
-            self.pricing_mem.save(
-                product.get("product_id"),
-                pricing,
-                embedding=price_emb,
-            )
-        except Exception as e:
-            logger.exception(f"[ERROR] Failed storing pricing: {e}")
-
-        # 6. Context search (FAISS lookup)
-        logger.info("[RUN] Stage 6 → Memory insights")
-
-        try:
-            similar_products = self.product_mem.search(product_emb, top_k=5)
-            recent_sentiments = self.sentiment_mem.search(sent_emb, top_k=5)
-            pricing_history = self.pricing_mem.search(price_emb, top_k=5)
-
-        except Exception as e:
-            logger.exception(f"[ERROR] Memory search failed: {e}")
-            similar_products = []
-            recent_sentiments = []
-            pricing_history = []
-
-        logger.info(f"[RUN] FINISHED pipeline for {product_id}")
+        ctx.log("[PIPELINE] END")
 
         report = {
             "product": product,
@@ -273,32 +337,25 @@ class RemoteCoordinator:
             },
         }
 
-        # Tambahkan business output
         report["business_summary"] = self.generate_business_report(report)
-        
         return report
 
-    # ------------------------------------------------------------
-    #  Search workflow (scrape multiple products)
-    # ------------------------------------------------------------
+    # ============================================================
+    #  Search Flow
+    # ============================================================
     def run_search(self, query: str, page: int = 1):
-        logger.info(f"[SEARCH] Searching for query='{query}', page={page}")
+        ctx = PipelineContext(f"search:{query}")
+        ctx.log(f"[SEARCH] query='{query}', page={page}")
 
-        scraper = self.discover("scraper_agent")
+        scraper = self.discover(ctx, "scraper_agent")
 
-        resp = self.call_agent(
-            scraper,
-            "search_products",
-            {"query": query, "page": page},
-        )
-
+        resp = self.call_agent(ctx, scraper, "search_products", {"query": query, "page": page})
         asins = resp.get("asins", [])
         results = []
 
         for asin in asins:
-            logger.info(f"[SEARCH] Processing ASIN={asin}")
-            out = self.run(asin)
-            results.append(out)
+            ctx.log("[SEARCH] Processing", asin=asin)
+            results.append(self.run(asin))
 
         return {
             "query": query,
@@ -307,9 +364,11 @@ class RemoteCoordinator:
             "results": results,
         }
 
-# -------------------------------------------------------------------
-#  DEBUG ENTRY POINT
-# -------------------------------------------------------------------
+
+# ============================================================
+#  CLI
+# ============================================================
+
 if __name__ == "__main__":
     rc = RemoteCoordinator()
     out = rc.run_search("rtx 4090", page=1)

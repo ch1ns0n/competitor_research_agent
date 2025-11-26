@@ -1,32 +1,64 @@
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 999.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1118.88, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1118.88, "competitor_average_price": 999.0, "sentiment_score": 0.5, "business_reason": ["Competitors are cheaper – maintaining price is recommended."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1166.83, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1166.83, "competitor_average_price": 1118.88, "sentiment_score": 0.5, "business_reason": ["Product underpriced vs competitors, and sentiment strong – price increase is justified."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1186.01, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1186.01, "competitor_average_price": 1166.83, "sentiment_score": 0.5, "business_reason": ["Product underpriced vs competitors, and sentiment strong – price increase is justified."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "competitor_average_price": 1186.01, "sentiment_score": 0.5, "business_reason": ["Product underpriced vs competitors, and sentiment strong – price increase is justified."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "competitor_average_price": 1186.01, "sentiment_score": 0.5, "business_reason": ["Product underpriced vs competitors, and sentiment strong – price increase is justified."]}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "base_price": 999.0, "positive_ratio": 0.9}}
-{"key": "FAKE123456", "metadata": {"recommended_price": 1193.68, "competitor_average_price": 1186.01, "sentiment_score": 0.5, "business_reason": ["Product underpriced vs competitors, and sentiment strong – price increase is justified."]}}
+{"key": "B09YCLG5PB", "metadata": {"recommended_price": 96.99, "base_price": 96.99, "positive_ratio": 0.9}}
+{"key": "B09YCLG5PB", "metadata": {"recommended_price": 96.99, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0BHD9TS9Q", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0BHD9TS9Q", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0BSVMLVTD", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0BSVMLVTD", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0DS2R6948", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DS2R6948", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0916ZWZ9S", "metadata": {"recommended_price": 1079.99, "base_price": 1079.99, "positive_ratio": 0.9}}
+{"key": "B0916ZWZ9S", "metadata": {"recommended_price": 1079.99, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0DS2WQZ2M", "metadata": {"recommended_price": 3359.99, "base_price": 3359.99, "positive_ratio": 0.9}}
+{"key": "B0DS2WQZ2M", "metadata": {"recommended_price": 3359.99, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B09YD4FJ5R", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B09YD4FJ5R", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0DT7JS6BG", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DT7JS6BG", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B0DQSD7YQC", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DQSD7YQC", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B09GWB753L", "metadata": {"recommended_price": 899.0, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B09GWB753L", "metadata": {"recommended_price": 899.0, "competitor_average_price": null, "sentiment_score": 0.5, "business_reason": ["No competitor pricing available – keeping current price."]}}
+{"key": "B08J5F3G18", "metadata": {"recommended_price": 1006.95, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B08J5F3G18", "metadata": {"recommended_price": 1006.95, "competitor_average_price": 1083.0, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0CSKCY685", "metadata": {"recommended_price": 328.69, "base_price": 293.21, "positive_ratio": 0.9}}
+{"key": "B0CSKCY685", "metadata": {"recommended_price": 328.69, "competitor_average_price": 1083.0, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0CWFR34L7", "metadata": {"recommended_price": 414.66, "base_price": 369.99, "positive_ratio": 0.9}}
+{"key": "B0CWFR34L7", "metadata": {"recommended_price": 414.66, "competitor_average_price": 1173.99, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DVCBDJBJ", "metadata": {"recommended_price": 1006.94, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DVCBDJBJ", "metadata": {"recommended_price": 1006.94, "competitor_average_price": 1057.73, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DS6V7L5M", "metadata": {"recommended_price": 1006.82, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DS6V7L5M", "metadata": {"recommended_price": 1006.82, "competitor_average_price": 788.46, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B094PSPVPC", "metadata": {"recommended_price": 1006.95, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B094PSPVPC", "metadata": {"recommended_price": 1006.95, "competitor_average_price": 1106.17, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B09YCLG5PB", "metadata": {"recommended_price": 481.43, "base_price": 429.63, "positive_ratio": 0.9}}
+{"key": "B09YCLG5PB", "metadata": {"recommended_price": 481.43, "competitor_average_price": 1114.76, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0BHD9TS9Q", "metadata": {"recommended_price": 1006.84, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0BHD9TS9Q", "metadata": {"recommended_price": 1006.84, "competitor_average_price": 818.31, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B0BSVMLVTD", "metadata": {"recommended_price": 1006.85, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0BSVMLVTD", "metadata": {"recommended_price": 1006.85, "competitor_average_price": 826.91, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B0DS2R6948", "metadata": {"recommended_price": 1332.62, "base_price": 1189.99, "positive_ratio": 0.9}}
+{"key": "B0DS2R6948", "metadata": {"recommended_price": 1332.62, "competitor_average_price": 830.23, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B0916ZWZ9S", "metadata": {"recommended_price": 1209.6, "base_price": 1079.99, "positive_ratio": 0.9}}
+{"key": "B0916ZWZ9S", "metadata": {"recommended_price": 1209.6, "competitor_average_price": 1106.17, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Slightly below competitor pricing with good sentiment – mild uplift acceptable."]}}
+{"key": "B0DQSMMCSH", "metadata": {"recommended_price": 1006.86, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DQSMMCSH", "metadata": {"recommended_price": 1006.86, "competitor_average_price": 852.34, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B0DS2WQZ2M", "metadata": {"recommended_price": 3762.02, "base_price": 3359.99, "positive_ratio": 0.9}}
+{"key": "B0DS2WQZ2M", "metadata": {"recommended_price": 3762.02, "competitor_average_price": 857.53, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B09YD4FJ5R", "metadata": {"recommended_price": 481.44, "base_price": 429.63, "positive_ratio": 0.9}}
+{"key": "B09YD4FJ5R", "metadata": {"recommended_price": 481.44, "competitor_average_price": 1185.19, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0CSKCY685", "metadata": {"recommended_price": 328.65, "base_price": 293.21, "positive_ratio": 0.9}}
+{"key": "B0CSKCY685", "metadata": {"recommended_price": 328.65, "competitor_average_price": 826.91, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DT7JS6BG", "metadata": {"recommended_price": 328.69, "base_price": 293.21, "positive_ratio": 0.9}}
+{"key": "B0DT7JS6BG", "metadata": {"recommended_price": 328.69, "competitor_average_price": 1075.42, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DQSD7YQC", "metadata": {"recommended_price": 1954.14, "base_price": 1744.99, "positive_ratio": 0.9}}
+{"key": "B0DQSD7YQC", "metadata": {"recommended_price": 1954.14, "competitor_average_price": 1082.42, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B09GWB753L", "metadata": {"recommended_price": 1119.88, "base_price": 999.99, "positive_ratio": 0.9}}
+{"key": "B09GWB753L", "metadata": {"recommended_price": 1119.88, "competitor_average_price": 779.05, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B08J5F3G18", "metadata": {"recommended_price": 1006.95, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B08J5F3G18", "metadata": {"recommended_price": 1006.95, "competitor_average_price": 1074.63, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DVCBDJBJ", "metadata": {"recommended_price": 1387.6, "base_price": 1239.0, "positive_ratio": 0.9}}
+{"key": "B0DVCBDJBJ", "metadata": {"recommended_price": 1387.6, "competitor_average_price": 1026.19, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product priced above competitors but sentiment strong – premium pricing acceptable."]}}
+{"key": "B0CWFR34L7", "metadata": {"recommended_price": 414.64, "base_price": 369.99, "positive_ratio": 0.9}}
+{"key": "B0CWFR34L7", "metadata": {"recommended_price": 414.64, "competitor_average_price": 1016.03, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}
+{"key": "B0DS6V7L5M", "metadata": {"recommended_price": 1006.97, "base_price": 899.0, "positive_ratio": 0.9}}
+{"key": "B0DS6V7L5M", "metadata": {"recommended_price": 1006.97, "competitor_average_price": 1141.7, "sentiment_score": 0.5, "business_reason": ["Customer sentiment is very strong – pricing can be more confident.", "Product is significantly underpriced relative to competitors – controlled price increase is justified."]}}

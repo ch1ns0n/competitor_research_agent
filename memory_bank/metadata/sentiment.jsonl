@@ -1,48 +1,96 @@
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
-{"key": "FAKE123456", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B094PSPVPC", "metadata": {"n_reviews": 10}}
+{"key": "B094PSPVPC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B094PSPVPC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YCLG5PB", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BHD9TS9Q", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0BSVMLVTD", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2R6948", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0916ZWZ9S", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSMMCSH", "metadata": {"n_reviews": 10}}
+{"key": "B0DQSMMCSH", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSMMCSH", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS2WQZ2M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09YD4FJ5R", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CSKCY685", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DT7JS6BG", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DQSD7YQC", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B09GWB753L", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B08J5F3G18", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DVCBDJBJ", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0CWFR34L7", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}
+{"key": "B0DS6V7L5M", "metadata": {"n_reviews": 10, "positive_ratio": 0.5, "top_issues": []}}

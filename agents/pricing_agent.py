@@ -46,54 +46,55 @@ def compute_recommended_price(
 
     competitor_avg = float(np.mean(competitor_prices))
 
-    # ==============================
-    # 1️⃣ SENTIMENT FACTOR
-    # ==============================
+    # SENTIMENT FACTOR
     if positive_ratio >= 0.85:
-        sentiment_factor = 0.12        # naik lebih berani
+        sentiment_factor = 0.12
     elif positive_ratio >= 0.70:
-        sentiment_factor = 0.05        # naik ringan
+        sentiment_factor = 0.05
     else:
-        sentiment_factor = -0.03       # turunkan sedikit
+        sentiment_factor = -0.03
 
-    # ==============================
-    # 2️⃣ GAP MARKET
-    # ==============================
-    gap = competitor_avg - base_price
-
-    # maksimum 40% dari gap kompetitor
+    # MARKET GAP
+    gap = (competitor_avg - base_price) / competitor_avg
     competitor_adjust = gap * 0.40
 
-    # ==============================
-    # 3️⃣ HITUNG HARGA BARU
-    # ==============================
+    # PROPOSED PRICE
     new_price = base_price + competitor_adjust + (base_price * sentiment_factor)
 
-    # ==============================
-    # 4️⃣ HARD LIMITS
-    # supaya tidak kelewat ekstrem
-    # ==============================
-    min_allowed = base_price * 0.85   # tidak turun > 15%
-    max_allowed = base_price * 1.20   # tidak naik > 20%
+    # LIMIT
+    new_price = max(min(new_price, base_price * 1.20), base_price * 0.85)
 
-    new_price = max(min(new_price, max_allowed), min_allowed)
-
-    # ==============================
-    # 5️⃣ BUSINESS NARRATION
-    # ==============================
+    # REASONS
     reasons = []
 
-    if positive_ratio < 0.65:
-        reasons.append("Customer sentiment is weak – apply conservative pricing.")
+    if positive_ratio < 0.60:
+        reasons.append("Customer sentiment is neutral or weak – avoid aggressive pricing changes.")
+    elif positive_ratio > 0.80:
+        reasons.append("Customer sentiment is very strong – pricing can be more confident.")
 
-    elif gap > 0 and positive_ratio > 0.75:
-        reasons.append("Product underpriced vs competitors, and sentiment strong – price increase is justified.")
-
-    elif gap > 0:
-        reasons.append("Competitors priced higher – slight upward correction suggested.")
-
+    if gap > 0.10:
+        if positive_ratio > 0.70:
+            reasons.append("Product is significantly underpriced relative to competitors – controlled price increase is justified.")
+        else:
+            reasons.append("Market price is significantly higher – but sentiment is weak, so keep adjustments conservative.")
+    elif gap > 0.02:
+        if positive_ratio > 0.70:
+            reasons.append("Slightly below competitor pricing with good sentiment – mild uplift acceptable.")
+        else:
+            reasons.append("Pricing slightly below competitors – better to maintain position until sentiment improves.")
+    elif abs(gap) <= 0.02:
+        if positive_ratio > 0.75:
+            reasons.append("Pricing matches market and sentiment is strong – small upward correction reasonable.")
+        else:
+            reasons.append("Pricing aligns with competitors – focus on strengthening sentiment.")
     else:
-        reasons.append("Competitors are cheaper – maintaining price is recommended.")
+        if positive_ratio < 0.65:
+            reasons.append("Product priced above competitors with weak sentiment – consider slight reduction.")
+        else:
+            reasons.append("Product priced above competitors but sentiment strong – premium pricing acceptable.")
+
+    if not reasons:
+        reasons.append("Pricing adjustment generated based on market and sentiment factors.")
 
     return {
         "recommended_price": round(new_price, 2),

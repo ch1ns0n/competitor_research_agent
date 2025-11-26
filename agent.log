@@ -4941,3 +4941,2031 @@ Please use the Async API instead.)
 2025-11-25 17:55:59,447 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
 2025-11-25 17:55:59,465 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
 2025-11-25 17:55:59,500 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BPGJCLYR
+2025-11-26 11:41:29,615 [INFO] coordinator_agent - [SEARCH] Searching for query='rtx 4090', page=1
+2025-11-26 11:41:29,615 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:41:31,682 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:41:31,682 [INFO] coordinator_agent - [CALL] POST search_products → http://localhost:8001/a2a/execute
+2025-11-26 11:41:33,737 [INFO] scraper_agent - [A2A] Task received → search_products
+2025-11-26 11:41:33,737 [INFO] search_scraper - [SCRAPE] Searching Amazon for 'rtx 4090', page=1
+2025-11-26 11:41:35,601 [INFO] search_scraper - [SCRAPE] Found 16 ASINs via requests
+2025-11-26 11:41:35,601 [INFO] scraper_agent - [SEARCH] Returned 16 ASINs
+2025-11-26 11:41:35,601 [INFO] coordinator_agent - [CALL] SUCCESS task=search_products
+2025-11-26 11:41:35,601 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YCLG5PB
+2025-11-26 11:41:35,601 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YCLG5PB
+2025-11-26 11:41:35,601 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:41:35,601 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:41:37,652 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:41:37,652 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:41:39,696 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:41:39,696 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 11:41:39,696 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 11:41:41,857 [INFO] product_scraper - Scrape success → B09YCLG5PB
+2025-11-26 11:41:45,569 [INFO] scraper_agent - [PRODUCT] Stored: B09YCLG5PB
+2025-11-26 11:41:45,569 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:41:45,569 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:41:47,631 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:41:47,631 [INFO] scraper_agent - [REVIEWS] Start → B09YCLG5PB
+2025-11-26 11:41:47,631 [INFO] review_scraper - Scraping reviews for product=B09YCLG5PB, page=1
+2025-11-26 11:41:50,083 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:41:59,783 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:41:59,783 [INFO] scraper_agent - [REVIEWS] B09YCLG5PB → 10 reviews fetched
+2025-11-26 11:41:59,783 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:41:59,783 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:42:03,277 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:42:03,293 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:42:03,293 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:42:05,306 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:42:05,306 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:42:11,359 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:42:11,379 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:42:11,379 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:42:13,441 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:42:13,441 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:42:18,985 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:42:19,007 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:42:19,024 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:42:19,033 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:42:19,042 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YCLG5PB
+2025-11-26 11:42:19,044 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BHD9TS9Q
+2025-11-26 11:42:19,044 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BHD9TS9Q
+2025-11-26 11:42:19,044 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:42:19,044 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:42:21,097 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:42:21,097 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:42:23,131 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:42:23,131 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 11:42:23,131 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 11:42:25,562 [INFO] product_scraper - Scrape success → B0BHD9TS9Q
+2025-11-26 11:42:25,593 [INFO] scraper_agent - [PRODUCT] Stored: B0BHD9TS9Q
+2025-11-26 11:42:25,594 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:42:25,594 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:42:27,661 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:42:27,661 [INFO] scraper_agent - [REVIEWS] Start → B0BHD9TS9Q
+2025-11-26 11:42:27,661 [INFO] review_scraper - Scraping reviews for product=B0BHD9TS9Q, page=1
+2025-11-26 11:42:29,716 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:42:31,872 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:42:31,872 [INFO] scraper_agent - [REVIEWS] B0BHD9TS9Q → 10 reviews fetched
+2025-11-26 11:42:31,872 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:42:31,872 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:42:31,895 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:42:31,908 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:42:31,908 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:42:33,967 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:42:33,967 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:42:36,047 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:42:36,072 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:42:36,073 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:42:38,119 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:42:38,119 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:42:40,182 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:42:40,194 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:42:40,211 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:42:40,223 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:42:40,224 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BHD9TS9Q
+2025-11-26 11:42:40,224 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BSVMLVTD
+2025-11-26 11:42:40,224 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BSVMLVTD
+2025-11-26 11:42:40,224 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:42:40,224 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:42:42,265 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:42:42,265 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:42:44,332 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:42:44,332 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 11:42:44,332 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 11:42:46,551 [INFO] product_scraper - Scrape success → B0BSVMLVTD
+2025-11-26 11:42:46,580 [INFO] scraper_agent - [PRODUCT] Stored: B0BSVMLVTD
+2025-11-26 11:42:46,581 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:42:46,581 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:42:48,606 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:42:48,607 [INFO] scraper_agent - [REVIEWS] Start → B0BSVMLVTD
+2025-11-26 11:42:48,607 [INFO] review_scraper - Scraping reviews for product=B0BSVMLVTD, page=1
+2025-11-26 11:42:50,945 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:42:53,725 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:42:53,727 [INFO] scraper_agent - [REVIEWS] B0BSVMLVTD → 10 reviews fetched
+2025-11-26 11:42:53,727 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:42:53,727 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:42:53,750 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:42:53,757 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:42:53,757 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:42:55,792 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:42:55,792 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:42:57,854 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:42:57,871 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:42:57,871 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:42:59,931 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:42:59,931 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:43:02,029 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:43:02,041 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:43:02,058 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:43:02,070 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:43:02,072 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BSVMLVTD
+2025-11-26 11:43:02,072 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0916ZWZ9S
+2025-11-26 11:43:02,072 [INFO] coordinator_agent - [RUN] Starting pipeline for B0916ZWZ9S
+2025-11-26 11:43:02,072 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:43:02,072 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:54:15,065 [INFO] coordinator_agent - [SEARCH] Searching for query='rtx 4090', page=1
+2025-11-26 11:54:15,065 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:54:17,182 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:54:17,183 [INFO] coordinator_agent - [CALL] POST search_products → http://localhost:8001/a2a/execute
+2025-11-26 11:54:19,249 [INFO] scraper_agent - [A2A] Task received → search_products
+2025-11-26 11:54:19,250 [INFO] search_scraper - [SCRAPE] Searching Amazon for 'rtx 4090', page=1
+2025-11-26 11:54:21,141 [INFO] search_scraper - [SCRAPE] Found 16 ASINs via requests
+2025-11-26 11:54:21,144 [INFO] scraper_agent - [SEARCH] Returned 16 ASINs
+2025-11-26 11:54:21,146 [INFO] coordinator_agent - [CALL] SUCCESS task=search_products
+2025-11-26 11:54:21,146 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YCLG5PB
+2025-11-26 11:54:21,147 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YCLG5PB
+2025-11-26 11:54:21,147 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:54:21,147 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:54:23,196 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:54:23,196 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:54:25,255 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:54:25,256 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 11:54:25,257 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 11:54:27,378 [INFO] product_scraper - Scrape success → B09YCLG5PB
+2025-11-26 11:54:27,402 [INFO] scraper_agent - [PRODUCT] Stored: B09YCLG5PB
+2025-11-26 11:54:27,403 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:54:27,404 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:54:29,467 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:54:29,468 [INFO] scraper_agent - [REVIEWS] Start → B09YCLG5PB
+2025-11-26 11:54:29,468 [INFO] review_scraper - Scraping reviews for product=B09YCLG5PB, page=1
+2025-11-26 11:54:31,346 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:54:36,374 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:54:36,375 [INFO] scraper_agent - [REVIEWS] B09YCLG5PB → 10 reviews fetched
+2025-11-26 11:54:36,375 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:54:36,376 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:54:40,214 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:54:40,235 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:54:40,236 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:54:42,260 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:54:42,261 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:54:44,453 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:54:44,470 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:54:44,470 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:54:46,514 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:54:46,515 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:54:48,608 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:54:48,619 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:54:48,637 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:54:48,649 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:54:48,650 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YCLG5PB
+2025-11-26 11:54:48,650 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BHD9TS9Q
+2025-11-26 11:54:48,650 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BHD9TS9Q
+2025-11-26 11:54:48,650 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:54:48,650 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:54:50,684 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:54:50,685 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:54:52,723 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:54:52,723 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 11:54:52,724 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 11:54:55,214 [INFO] product_scraper - Scrape success → B0BHD9TS9Q
+2025-11-26 11:54:55,243 [INFO] scraper_agent - [PRODUCT] Stored: B0BHD9TS9Q
+2025-11-26 11:54:55,244 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:54:55,245 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:54:57,281 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:54:57,281 [INFO] scraper_agent - [REVIEWS] Start → B0BHD9TS9Q
+2025-11-26 11:54:57,281 [INFO] review_scraper - Scraping reviews for product=B0BHD9TS9Q, page=1
+2025-11-26 11:54:58,967 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:55:01,373 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:55:01,374 [INFO] scraper_agent - [REVIEWS] B0BHD9TS9Q → 10 reviews fetched
+2025-11-26 11:55:01,375 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:55:01,375 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:55:01,404 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:55:01,433 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:55:01,433 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:55:03,492 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:55:03,492 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:55:05,559 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:55:05,577 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:55:05,577 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:55:07,611 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:55:07,611 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:55:09,670 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:55:09,680 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:55:09,699 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:55:09,734 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BHD9TS9Q
+2025-11-26 11:55:09,734 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BSVMLVTD
+2025-11-26 11:55:09,734 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BSVMLVTD
+2025-11-26 11:55:09,734 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:55:09,735 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:55:11,761 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:55:11,761 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:55:13,789 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:55:13,789 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 11:55:13,789 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 11:55:16,139 [INFO] product_scraper - Scrape success → B0BSVMLVTD
+2025-11-26 11:55:16,170 [INFO] scraper_agent - [PRODUCT] Stored: B0BSVMLVTD
+2025-11-26 11:55:16,171 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:55:16,171 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:55:18,217 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:55:18,217 [INFO] scraper_agent - [REVIEWS] Start → B0BSVMLVTD
+2025-11-26 11:55:18,218 [INFO] review_scraper - Scraping reviews for product=B0BSVMLVTD, page=1
+2025-11-26 11:55:19,836 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:55:22,606 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:55:22,607 [INFO] scraper_agent - [REVIEWS] B0BSVMLVTD → 10 reviews fetched
+2025-11-26 11:55:22,607 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:55:22,607 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:55:22,626 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:55:22,639 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:55:22,639 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:55:24,674 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:55:24,674 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:55:26,753 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:55:26,770 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:55:26,771 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:55:28,802 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:55:28,802 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:55:30,885 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:55:30,896 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:55:30,915 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:55:30,949 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BSVMLVTD
+2025-11-26 11:55:30,950 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2R6948
+2025-11-26 11:55:30,950 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2R6948
+2025-11-26 11:55:30,950 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:55:30,950 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:55:32,997 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:55:32,997 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:55:35,040 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:55:35,040 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 11:55:35,040 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 11:55:37,253 [INFO] product_scraper - Scrape success → B0DS2R6948
+2025-11-26 11:55:37,282 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2R6948
+2025-11-26 11:55:37,284 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:55:37,284 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:55:39,310 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:55:39,310 [INFO] scraper_agent - [REVIEWS] Start → B0DS2R6948
+2025-11-26 11:55:39,310 [INFO] review_scraper - Scraping reviews for product=B0DS2R6948, page=1
+2025-11-26 11:55:41,635 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:55:44,039 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:55:44,039 [INFO] scraper_agent - [REVIEWS] B0DS2R6948 → 10 reviews fetched
+2025-11-26 11:55:44,039 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:55:44,039 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:55:44,080 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:55:44,105 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:55:44,107 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:55:46,180 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:55:46,180 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:55:48,296 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:55:48,311 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:55:48,311 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:55:50,356 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:55:50,356 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:55:52,460 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:55:52,472 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:55:52,491 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:55:52,523 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2R6948
+2025-11-26 11:55:52,524 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0916ZWZ9S
+2025-11-26 11:55:52,525 [INFO] coordinator_agent - [RUN] Starting pipeline for B0916ZWZ9S
+2025-11-26 11:55:52,525 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:55:52,525 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:55:54,570 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:55:54,570 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:55:56,621 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:55:56,621 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 11:55:56,621 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 11:55:58,951 [INFO] product_scraper - Scrape success → B0916ZWZ9S
+2025-11-26 11:55:58,987 [INFO] scraper_agent - [PRODUCT] Stored: B0916ZWZ9S
+2025-11-26 11:55:58,988 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:55:58,989 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:56:01,048 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:56:01,048 [INFO] scraper_agent - [REVIEWS] Start → B0916ZWZ9S
+2025-11-26 11:56:01,048 [INFO] review_scraper - Scraping reviews for product=B0916ZWZ9S, page=1
+2025-11-26 11:56:03,442 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:56:05,748 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:56:05,748 [INFO] scraper_agent - [REVIEWS] B0916ZWZ9S → 10 reviews fetched
+2025-11-26 11:56:05,748 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:56:05,748 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:56:05,785 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:56:05,794 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:56:05,794 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:56:07,856 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:56:07,857 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:56:09,958 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:56:09,976 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:56:09,976 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:56:12,020 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:56:12,020 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:56:14,091 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:56:14,104 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:56:14,123 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:56:14,157 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0916ZWZ9S
+2025-11-26 11:56:14,157 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YD4FJ5R
+2025-11-26 11:56:14,157 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YD4FJ5R
+2025-11-26 11:56:14,157 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:56:14,157 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:56:16,206 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:56:16,206 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:56:18,251 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:56:18,251 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 11:56:18,251 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 11:56:20,647 [INFO] product_scraper - Scrape success → B09YD4FJ5R
+2025-11-26 11:56:20,688 [INFO] scraper_agent - [PRODUCT] Stored: B09YD4FJ5R
+2025-11-26 11:56:20,689 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:56:20,689 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:56:22,747 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:56:22,747 [INFO] scraper_agent - [REVIEWS] Start → B09YD4FJ5R
+2025-11-26 11:56:22,747 [INFO] review_scraper - Scraping reviews for product=B09YD4FJ5R, page=1
+2025-11-26 11:56:24,417 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:56:26,728 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:56:26,728 [INFO] scraper_agent - [REVIEWS] B09YD4FJ5R → 10 reviews fetched
+2025-11-26 11:56:26,728 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:56:26,728 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:56:26,765 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:56:26,785 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:56:26,785 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:56:28,818 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:56:28,818 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:56:30,920 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:56:30,938 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:56:30,938 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:56:32,990 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:56:32,990 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:56:35,068 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:56:35,082 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:56:35,099 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:56:35,132 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YD4FJ5R
+2025-11-26 11:56:35,132 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2WQZ2M
+2025-11-26 11:56:35,132 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2WQZ2M
+2025-11-26 11:56:35,132 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:56:35,132 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:56:37,175 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:56:37,175 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:56:39,256 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:56:39,256 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 11:56:39,256 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 11:56:41,801 [INFO] product_scraper - Scrape success → B0DS2WQZ2M
+2025-11-26 11:56:41,839 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2WQZ2M
+2025-11-26 11:56:41,840 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:56:41,841 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:56:43,883 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:56:43,883 [INFO] scraper_agent - [REVIEWS] Start → B0DS2WQZ2M
+2025-11-26 11:56:43,883 [INFO] review_scraper - Scraping reviews for product=B0DS2WQZ2M, page=1
+2025-11-26 11:56:45,550 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:56:47,929 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:56:47,929 [INFO] scraper_agent - [REVIEWS] B0DS2WQZ2M → 10 reviews fetched
+2025-11-26 11:56:47,930 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:56:47,930 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:56:47,954 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:56:47,968 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:56:47,969 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:56:49,981 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:56:49,981 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:56:52,076 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:56:52,093 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:56:52,093 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:56:54,144 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:56:54,144 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:56:56,228 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 180, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 11:56:56,239 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:56:56,258 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:56:56,293 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2WQZ2M
+2025-11-26 11:56:56,293 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09GWB753L
+2025-11-26 11:56:56,293 [INFO] coordinator_agent - [RUN] Starting pipeline for B09GWB753L
+2025-11-26 11:56:56,293 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:56:56,293 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:56:58,358 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:56:58,360 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:57:00,427 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:57:00,427 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 11:57:00,428 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 11:57:03,126 [INFO] product_scraper - Scrape success → B09GWB753L
+2025-11-26 11:57:03,152 [INFO] scraper_agent - [PRODUCT] Stored: B09GWB753L
+2025-11-26 11:57:03,153 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:57:03,153 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:57:05,215 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:57:05,215 [INFO] scraper_agent - [REVIEWS] Start → B09GWB753L
+2025-11-26 11:57:05,215 [INFO] review_scraper - Scraping reviews for product=B09GWB753L, page=1
+2025-11-26 11:57:06,860 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:57:09,208 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:57:09,210 [INFO] scraper_agent - [REVIEWS] B09GWB753L → 10 reviews fetched
+2025-11-26 11:57:09,210 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:57:09,211 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:57:09,228 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:57:09,242 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:57:09,242 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:57:11,296 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:57:11,297 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:57:13,484 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:57:13,513 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:57:13,513 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:57:15,560 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:57:15,561 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:57:17,678 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:57:17,696 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:57:17,732 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09GWB753L
+2025-11-26 11:57:17,732 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DQSD7YQC
+2025-11-26 11:57:17,732 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DQSD7YQC
+2025-11-26 11:57:17,732 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:57:17,732 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:57:19,776 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:57:19,776 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:57:21,809 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:57:21,809 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 11:57:21,809 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 11:57:24,255 [INFO] product_scraper - Scrape success → B0DQSD7YQC
+2025-11-26 11:57:24,286 [INFO] scraper_agent - [PRODUCT] Stored: B0DQSD7YQC
+2025-11-26 11:57:24,286 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:57:24,286 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:57:26,341 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:57:26,342 [INFO] scraper_agent - [REVIEWS] Start → B0DQSD7YQC
+2025-11-26 11:57:26,342 [INFO] review_scraper - Scraping reviews for product=B0DQSD7YQC, page=1
+2025-11-26 11:57:27,955 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:57:31,018 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:57:31,019 [INFO] scraper_agent - [REVIEWS] B0DQSD7YQC → 10 reviews fetched
+2025-11-26 11:57:31,020 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:57:31,020 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:57:31,041 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:57:31,056 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:57:31,056 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:57:33,110 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:57:33,110 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:57:35,211 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:57:35,226 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:57:35,226 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:57:37,276 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:57:37,276 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:57:39,365 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:57:39,384 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:57:39,418 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DQSD7YQC
+2025-11-26 11:57:39,418 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DT7JS6BG
+2025-11-26 11:57:39,418 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DT7JS6BG
+2025-11-26 11:57:39,418 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:57:39,418 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:57:41,478 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:57:41,478 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:57:43,525 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:57:43,526 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 11:57:43,526 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 11:57:46,103 [INFO] product_scraper - Scrape success → B0DT7JS6BG
+2025-11-26 11:57:46,131 [INFO] scraper_agent - [PRODUCT] Stored: B0DT7JS6BG
+2025-11-26 11:57:46,132 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:57:46,132 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:57:48,196 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:57:48,197 [INFO] scraper_agent - [REVIEWS] Start → B0DT7JS6BG
+2025-11-26 11:57:48,197 [INFO] review_scraper - Scraping reviews for product=B0DT7JS6BG, page=1
+2025-11-26 11:57:49,853 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:57:52,192 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:57:52,192 [INFO] scraper_agent - [REVIEWS] B0DT7JS6BG → 10 reviews fetched
+2025-11-26 11:57:52,193 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:57:52,194 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:57:52,217 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:57:52,231 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:57:52,231 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:57:54,280 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:57:54,281 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:57:56,359 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:57:56,376 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:57:56,376 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:57:58,428 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:57:58,430 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:58:00,539 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:58:00,558 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:58:00,592 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DT7JS6BG
+2025-11-26 11:58:00,593 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B08J5F3G18
+2025-11-26 11:58:00,593 [INFO] coordinator_agent - [RUN] Starting pipeline for B08J5F3G18
+2025-11-26 11:58:00,593 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:58:00,593 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:58:02,636 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:58:02,637 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:58:04,694 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:58:04,694 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 11:58:04,694 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 11:58:07,148 [INFO] product_scraper - Scrape success → B08J5F3G18
+2025-11-26 11:58:07,177 [INFO] scraper_agent - [PRODUCT] Stored: B08J5F3G18
+2025-11-26 11:58:07,178 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:58:07,178 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:58:09,217 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:58:09,217 [INFO] scraper_agent - [REVIEWS] Start → B08J5F3G18
+2025-11-26 11:58:09,218 [INFO] review_scraper - Scraping reviews for product=B08J5F3G18, page=1
+2025-11-26 11:58:11,355 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:58:13,703 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:58:13,704 [INFO] scraper_agent - [REVIEWS] B08J5F3G18 → 10 reviews fetched
+2025-11-26 11:58:13,705 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:58:13,705 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:58:13,727 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:58:13,739 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:58:13,740 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:58:15,793 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:58:15,794 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:58:17,917 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:58:17,935 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:58:17,935 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:58:19,952 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:58:19,953 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:58:22,035 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:58:22,054 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:58:22,089 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B08J5F3G18
+2025-11-26 11:58:22,089 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CSKCY685
+2025-11-26 11:58:22,089 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CSKCY685
+2025-11-26 11:58:22,089 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:58:22,089 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:58:24,112 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:58:24,112 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:58:26,143 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:58:26,143 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 11:58:26,143 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 11:58:28,302 [INFO] product_scraper - Scrape success → B0CSKCY685
+2025-11-26 11:58:28,336 [INFO] scraper_agent - [PRODUCT] Stored: B0CSKCY685
+2025-11-26 11:58:28,337 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:58:28,337 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:58:30,362 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:58:30,362 [INFO] scraper_agent - [REVIEWS] Start → B0CSKCY685
+2025-11-26 11:58:30,363 [INFO] review_scraper - Scraping reviews for product=B0CSKCY685, page=1
+2025-11-26 11:58:32,767 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:58:35,085 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:58:35,085 [INFO] scraper_agent - [REVIEWS] B0CSKCY685 → 10 reviews fetched
+2025-11-26 11:58:35,085 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:58:35,086 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:58:35,107 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:58:35,119 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:58:35,119 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:58:37,160 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:58:37,161 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:58:39,287 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:58:39,304 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:58:39,304 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:58:41,344 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:58:41,345 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:58:43,414 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:58:43,433 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:58:43,467 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CSKCY685
+2025-11-26 11:58:43,467 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CWFR34L7
+2025-11-26 11:58:43,467 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CWFR34L7
+2025-11-26 11:58:43,467 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:58:43,467 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:58:45,509 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:58:45,509 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:58:47,587 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:58:47,587 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 11:58:47,587 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 11:58:50,243 [INFO] product_scraper - Scrape success → B0CWFR34L7
+2025-11-26 11:58:50,273 [INFO] scraper_agent - [PRODUCT] Stored: B0CWFR34L7
+2025-11-26 11:58:50,274 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:58:50,274 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:58:52,287 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:58:52,287 [INFO] scraper_agent - [REVIEWS] Start → B0CWFR34L7
+2025-11-26 11:58:52,287 [INFO] review_scraper - Scraping reviews for product=B0CWFR34L7, page=1
+2025-11-26 11:58:54,590 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:58:56,749 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:58:56,751 [INFO] scraper_agent - [REVIEWS] B0CWFR34L7 → 10 reviews fetched
+2025-11-26 11:58:56,752 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:58:56,752 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:58:56,769 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:58:56,782 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:58:56,782 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:58:58,823 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:58:58,823 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:59:00,940 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:59:00,957 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:59:00,957 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:59:03,031 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:59:03,031 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:59:05,117 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:59:05,135 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:59:05,170 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CWFR34L7
+2025-11-26 11:59:05,170 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DVCBDJBJ
+2025-11-26 11:59:05,170 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DVCBDJBJ
+2025-11-26 11:59:05,170 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:59:05,171 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:59:07,230 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:59:07,231 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:59:09,288 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:59:09,289 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 11:59:09,289 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 11:59:11,514 [INFO] product_scraper - Scrape success → B0DVCBDJBJ
+2025-11-26 11:59:11,544 [INFO] scraper_agent - [PRODUCT] Stored: B0DVCBDJBJ
+2025-11-26 11:59:11,545 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:59:11,545 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:59:13,565 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:59:13,565 [INFO] scraper_agent - [REVIEWS] Start → B0DVCBDJBJ
+2025-11-26 11:59:13,567 [INFO] review_scraper - Scraping reviews for product=B0DVCBDJBJ, page=1
+2025-11-26 11:59:15,697 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:59:18,696 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:59:18,696 [INFO] scraper_agent - [REVIEWS] B0DVCBDJBJ → 10 reviews fetched
+2025-11-26 11:59:18,697 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:59:18,697 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:59:18,717 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:59:18,733 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:59:18,733 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:59:20,759 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:59:20,760 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:59:22,849 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:59:22,867 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:59:22,867 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:59:24,896 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:59:24,897 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:59:26,971 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:59:26,994 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:59:27,031 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DVCBDJBJ
+2025-11-26 11:59:27,031 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS6V7L5M
+2025-11-26 11:59:27,031 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS6V7L5M
+2025-11-26 11:59:27,031 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:59:27,031 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:59:29,078 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:59:29,078 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:59:31,112 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:59:31,112 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 11:59:31,112 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 11:59:33,487 [INFO] product_scraper - Scrape success → B0DS6V7L5M
+2025-11-26 11:59:33,517 [INFO] scraper_agent - [PRODUCT] Stored: B0DS6V7L5M
+2025-11-26 11:59:33,517 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:59:33,517 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:59:35,545 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:59:35,545 [INFO] scraper_agent - [REVIEWS] Start → B0DS6V7L5M
+2025-11-26 11:59:35,545 [INFO] review_scraper - Scraping reviews for product=B0DS6V7L5M, page=1
+2025-11-26 11:59:37,928 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 11:59:40,292 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 11:59:40,293 [INFO] scraper_agent - [REVIEWS] B0DS6V7L5M → 10 reviews fetched
+2025-11-26 11:59:40,293 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 11:59:40,293 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 11:59:40,315 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 11:59:40,330 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 11:59:40,330 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 11:59:42,372 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 11:59:42,372 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 11:59:44,460 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 11:59:44,479 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 11:59:44,479 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 11:59:46,539 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 11:59:46,539 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 11:59:48,619 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 11:59:48,638 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 11:59:48,673 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS6V7L5M
+2025-11-26 11:59:48,673 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B094PSPVPC
+2025-11-26 11:59:48,674 [INFO] coordinator_agent - [RUN] Starting pipeline for B094PSPVPC
+2025-11-26 11:59:48,674 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 11:59:48,674 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 11:59:50,717 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 11:59:50,718 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 11:59:52,765 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 11:59:52,765 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 11:59:52,765 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 11:59:54,905 [INFO] product_scraper - Scrape success → B094PSPVPC
+2025-11-26 11:59:54,935 [INFO] scraper_agent - [PRODUCT] Stored: B094PSPVPC
+2025-11-26 11:59:54,936 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 11:59:54,937 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 11:59:57,007 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 11:59:57,008 [INFO] scraper_agent - [REVIEWS] Start → B094PSPVPC
+2025-11-26 11:59:57,009 [INFO] review_scraper - Scraping reviews for product=B094PSPVPC, page=1
+2025-11-26 11:59:58,649 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:00:02,015 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:00:02,016 [INFO] scraper_agent - [REVIEWS] B094PSPVPC → 10 reviews fetched
+2025-11-26 12:00:02,016 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:00:02,016 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:00:02,038 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:00:02,054 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:00:02,054 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:00:04,072 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:00:04,072 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:00:06,153 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:00:06,171 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:00:06,171 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:00:08,204 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:00:08,205 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:00:10,297 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:00:10,315 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:00:10,350 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B094PSPVPC
+2025-11-26 12:05:54,543 [INFO] coordinator_agent - [SEARCH] Searching for query='rtx 4090', page=1
+2025-11-26 12:05:54,543 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:05:56,711 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:05:56,711 [INFO] coordinator_agent - [CALL] POST search_products → http://localhost:8001/a2a/execute
+2025-11-26 12:05:58,735 [INFO] scraper_agent - [A2A] Task received → search_products
+2025-11-26 12:05:58,735 [INFO] search_scraper - [SCRAPE] Searching Amazon for 'rtx 4090', page=1
+2025-11-26 12:06:00,200 [INFO] search_scraper - [SCRAPE] Found 16 ASINs via requests
+2025-11-26 12:06:00,200 [INFO] scraper_agent - [SEARCH] Returned 16 ASINs
+2025-11-26 12:06:00,202 [INFO] coordinator_agent - [CALL] SUCCESS task=search_products
+2025-11-26 12:06:00,202 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YCLG5PB
+2025-11-26 12:06:00,202 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YCLG5PB
+2025-11-26 12:06:00,202 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:06:00,202 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:06:02,240 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:06:02,240 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:06:04,285 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:06:04,286 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 12:06:04,287 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 12:06:06,600 [INFO] product_scraper - Scrape success → B09YCLG5PB
+2025-11-26 12:06:06,632 [INFO] scraper_agent - [PRODUCT] Stored: B09YCLG5PB
+2025-11-26 12:06:06,633 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:06:06,633 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:06:08,671 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:06:08,671 [INFO] scraper_agent - [REVIEWS] Start → B09YCLG5PB
+2025-11-26 12:06:08,671 [INFO] review_scraper - Scraping reviews for product=B09YCLG5PB, page=1
+2025-11-26 12:06:10,301 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:06:13,274 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:06:13,274 [INFO] scraper_agent - [REVIEWS] B09YCLG5PB → 10 reviews fetched
+2025-11-26 12:06:13,274 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:06:13,274 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:06:16,957 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:06:16,973 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:06:16,974 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:06:19,015 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:06:19,015 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:06:21,108 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:06:21,132 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:06:21,132 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:06:23,163 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:06:23,163 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:06:25,244 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:06:25,264 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:06:25,297 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YCLG5PB
+2025-11-26 12:06:25,297 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BHD9TS9Q
+2025-11-26 12:06:25,297 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BHD9TS9Q
+2025-11-26 12:06:25,297 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:06:25,297 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:06:27,316 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:06:27,316 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:06:29,354 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:06:29,354 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 12:06:29,354 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 12:06:31,661 [INFO] product_scraper - Scrape success → B0BHD9TS9Q
+2025-11-26 12:06:31,700 [INFO] scraper_agent - [PRODUCT] Stored: B0BHD9TS9Q
+2025-11-26 12:06:31,701 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:06:31,701 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:06:33,762 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:06:33,762 [INFO] scraper_agent - [REVIEWS] Start → B0BHD9TS9Q
+2025-11-26 12:06:33,762 [INFO] review_scraper - Scraping reviews for product=B0BHD9TS9Q, page=1
+2025-11-26 12:06:36,141 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:06:38,520 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:06:38,520 [INFO] scraper_agent - [REVIEWS] B0BHD9TS9Q → 10 reviews fetched
+2025-11-26 12:06:38,520 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:06:38,520 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:06:38,541 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:06:38,554 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:06:38,554 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:06:40,598 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:06:40,598 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:06:42,667 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:06:42,687 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:06:42,688 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:06:44,724 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:06:44,724 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:06:46,812 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:06:46,830 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:06:46,892 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BHD9TS9Q
+2025-11-26 12:06:46,892 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BSVMLVTD
+2025-11-26 12:06:46,892 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BSVMLVTD
+2025-11-26 12:06:46,893 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:06:46,893 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:06:48,938 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:06:48,938 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:06:50,976 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:06:50,976 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 12:06:50,976 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 12:06:53,203 [INFO] product_scraper - Scrape success → B0BSVMLVTD
+2025-11-26 12:06:53,241 [INFO] scraper_agent - [PRODUCT] Stored: B0BSVMLVTD
+2025-11-26 12:06:53,242 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:06:53,243 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:06:55,277 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:06:55,277 [INFO] scraper_agent - [REVIEWS] Start → B0BSVMLVTD
+2025-11-26 12:06:55,277 [INFO] review_scraper - Scraping reviews for product=B0BSVMLVTD, page=1
+2025-11-26 12:06:57,596 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:07:00,040 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:07:00,040 [INFO] scraper_agent - [REVIEWS] B0BSVMLVTD → 10 reviews fetched
+2025-11-26 12:07:00,040 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:07:00,040 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:07:00,077 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:07:00,091 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:07:00,091 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:07:02,141 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:07:02,141 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:07:04,216 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:07:04,233 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:07:04,233 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:07:06,278 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:07:06,278 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:07:08,373 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:07:08,391 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:07:08,425 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BSVMLVTD
+2025-11-26 12:07:08,425 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2R6948
+2025-11-26 12:07:08,425 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2R6948
+2025-11-26 12:07:08,425 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:07:08,425 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:07:10,477 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:07:10,477 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:07:12,556 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:07:12,556 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 12:07:12,556 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 12:07:15,002 [INFO] product_scraper - Scrape success → B0DS2R6948
+2025-11-26 12:07:15,036 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2R6948
+2025-11-26 12:07:15,037 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:07:15,038 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:07:17,088 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:07:17,089 [INFO] scraper_agent - [REVIEWS] Start → B0DS2R6948
+2025-11-26 12:07:17,090 [INFO] review_scraper - Scraping reviews for product=B0DS2R6948, page=1
+2025-11-26 12:07:19,411 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:07:22,476 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:07:22,476 [INFO] scraper_agent - [REVIEWS] B0DS2R6948 → 10 reviews fetched
+2025-11-26 12:07:22,476 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:07:22,476 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:07:22,501 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:07:22,514 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:07:22,515 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:07:24,570 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:07:24,570 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:07:26,666 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:07:26,688 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:07:26,688 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:07:28,704 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:07:28,704 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:07:30,807 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:07:30,825 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:07:30,860 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2R6948
+2025-11-26 12:07:30,860 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0916ZWZ9S
+2025-11-26 12:07:30,860 [INFO] coordinator_agent - [RUN] Starting pipeline for B0916ZWZ9S
+2025-11-26 12:07:30,860 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:07:30,860 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:07:32,906 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:07:32,906 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:07:34,975 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:07:34,975 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 12:07:34,975 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 12:07:37,504 [INFO] product_scraper - Scrape success → B0916ZWZ9S
+2025-11-26 12:07:37,538 [INFO] scraper_agent - [PRODUCT] Stored: B0916ZWZ9S
+2025-11-26 12:07:37,539 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:07:37,539 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:07:39,576 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:07:39,576 [INFO] scraper_agent - [REVIEWS] Start → B0916ZWZ9S
+2025-11-26 12:07:39,576 [INFO] review_scraper - Scraping reviews for product=B0916ZWZ9S, page=1
+2025-11-26 12:07:41,210 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:07:44,331 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:07:44,331 [INFO] scraper_agent - [REVIEWS] B0916ZWZ9S → 10 reviews fetched
+2025-11-26 12:07:44,331 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:07:44,331 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:07:44,356 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:07:44,362 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:07:44,362 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:07:46,430 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:07:46,430 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:07:48,512 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:07:48,539 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:07:48,539 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:07:50,579 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:07:50,579 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:07:52,674 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:07:52,692 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:07:52,726 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0916ZWZ9S
+2025-11-26 12:07:52,726 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YD4FJ5R
+2025-11-26 12:07:52,726 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YD4FJ5R
+2025-11-26 12:07:52,726 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:07:52,726 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:07:54,735 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:07:54,735 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:07:56,772 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:07:56,772 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 12:07:56,772 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 12:07:58,889 [INFO] product_scraper - Scrape success → B09YD4FJ5R
+2025-11-26 12:07:58,927 [INFO] scraper_agent - [PRODUCT] Stored: B09YD4FJ5R
+2025-11-26 12:07:58,927 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:07:58,928 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:08:00,944 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:08:00,944 [INFO] scraper_agent - [REVIEWS] Start → B09YD4FJ5R
+2025-11-26 12:08:00,944 [INFO] review_scraper - Scraping reviews for product=B09YD4FJ5R, page=1
+2025-11-26 12:08:02,605 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:08:04,921 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:08:04,921 [INFO] scraper_agent - [REVIEWS] B09YD4FJ5R → 10 reviews fetched
+2025-11-26 12:08:04,921 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:08:04,921 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:08:04,947 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:08:04,950 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:08:04,950 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:08:07,015 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:08:07,015 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:08:09,082 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:08:09,107 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:08:09,108 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:08:11,121 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:08:11,121 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:08:13,211 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:08:13,229 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:08:13,265 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YD4FJ5R
+2025-11-26 12:08:13,265 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2WQZ2M
+2025-11-26 12:08:13,266 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2WQZ2M
+2025-11-26 12:08:13,266 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:08:13,266 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:08:15,306 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:08:15,306 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:08:17,360 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:08:17,360 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 12:08:17,360 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 12:08:19,715 [INFO] product_scraper - Scrape success → B0DS2WQZ2M
+2025-11-26 12:08:19,754 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2WQZ2M
+2025-11-26 12:08:19,755 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:08:19,755 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:08:21,789 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:08:21,789 [INFO] scraper_agent - [REVIEWS] Start → B0DS2WQZ2M
+2025-11-26 12:08:21,789 [INFO] review_scraper - Scraping reviews for product=B0DS2WQZ2M, page=1
+2025-11-26 12:08:23,256 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:08:25,459 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:08:25,459 [INFO] scraper_agent - [REVIEWS] B0DS2WQZ2M → 10 reviews fetched
+2025-11-26 12:08:25,459 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:08:25,459 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:08:25,482 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:08:25,496 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:08:25,496 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:08:27,539 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:08:27,539 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:08:29,640 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:08:29,661 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:08:29,661 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:08:31,692 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:08:31,692 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:08:33,778 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:08:33,797 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:08:33,831 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2WQZ2M
+2025-11-26 12:08:33,831 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09GWB753L
+2025-11-26 12:08:33,832 [INFO] coordinator_agent - [RUN] Starting pipeline for B09GWB753L
+2025-11-26 12:08:33,832 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:08:33,832 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:08:35,878 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:08:35,878 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:08:37,939 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:08:37,939 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 12:08:37,939 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 12:08:40,624 [INFO] product_scraper - Scrape success → B09GWB753L
+2025-11-26 12:08:40,647 [INFO] scraper_agent - [PRODUCT] Stored: B09GWB753L
+2025-11-26 12:08:40,648 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:08:40,648 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:08:42,704 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:08:42,704 [INFO] scraper_agent - [REVIEWS] Start → B09GWB753L
+2025-11-26 12:08:42,704 [INFO] review_scraper - Scraping reviews for product=B09GWB753L, page=1
+2025-11-26 12:08:44,318 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:08:46,684 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:08:46,684 [INFO] scraper_agent - [REVIEWS] B09GWB753L → 10 reviews fetched
+2025-11-26 12:08:46,686 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:08:46,686 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:08:46,703 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:08:46,715 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:08:46,715 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:08:48,771 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:08:48,771 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:08:50,854 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:08:50,873 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:08:50,874 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:08:52,924 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:08:52,924 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:08:54,992 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:08:55,009 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:08:55,042 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09GWB753L
+2025-11-26 12:08:55,042 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DQSD7YQC
+2025-11-26 12:08:55,042 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DQSD7YQC
+2025-11-26 12:08:55,044 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:08:55,044 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:08:57,109 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:08:57,109 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:08:59,140 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:08:59,140 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 12:08:59,140 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 12:09:01,412 [INFO] product_scraper - Scrape success → B0DQSD7YQC
+2025-11-26 12:09:01,444 [INFO] scraper_agent - [PRODUCT] Stored: B0DQSD7YQC
+2025-11-26 12:09:01,444 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:09:01,444 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:09:03,493 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:09:03,493 [INFO] scraper_agent - [REVIEWS] Start → B0DQSD7YQC
+2025-11-26 12:09:03,493 [INFO] review_scraper - Scraping reviews for product=B0DQSD7YQC, page=1
+2025-11-26 12:09:05,143 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:09:08,126 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:09:08,127 [INFO] scraper_agent - [REVIEWS] B0DQSD7YQC → 10 reviews fetched
+2025-11-26 12:09:08,127 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:09:08,128 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:09:08,146 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:09:08,164 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:09:08,164 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:09:10,195 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:09:10,195 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:09:12,292 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:09:12,310 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:09:12,310 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:09:14,362 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:09:14,363 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:09:16,443 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:09:16,462 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:09:16,500 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DQSD7YQC
+2025-11-26 12:09:16,500 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DT7JS6BG
+2025-11-26 12:09:16,500 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DT7JS6BG
+2025-11-26 12:09:16,500 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:09:16,500 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:09:18,539 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:09:18,539 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:09:20,545 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:09:20,546 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 12:09:20,546 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 12:09:22,720 [INFO] product_scraper - Scrape success → B0DT7JS6BG
+2025-11-26 12:09:22,748 [INFO] scraper_agent - [PRODUCT] Stored: B0DT7JS6BG
+2025-11-26 12:09:22,749 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:09:22,749 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:09:24,778 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:09:24,779 [INFO] scraper_agent - [REVIEWS] Start → B0DT7JS6BG
+2025-11-26 12:09:24,779 [INFO] review_scraper - Scraping reviews for product=B0DT7JS6BG, page=1
+2025-11-26 12:09:27,194 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:09:29,540 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:09:29,541 [INFO] scraper_agent - [REVIEWS] B0DT7JS6BG → 10 reviews fetched
+2025-11-26 12:09:29,541 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:09:29,542 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:09:29,562 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:09:29,576 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:09:29,576 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:09:31,639 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:09:31,640 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:09:33,738 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:09:33,755 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:09:33,756 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:09:35,794 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:09:35,795 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:09:37,869 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:09:37,888 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:09:37,925 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DT7JS6BG
+2025-11-26 12:09:37,926 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B08J5F3G18
+2025-11-26 12:09:37,926 [INFO] coordinator_agent - [RUN] Starting pipeline for B08J5F3G18
+2025-11-26 12:09:37,926 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:09:37,926 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:09:39,982 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:09:39,983 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:09:42,030 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:09:42,030 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 12:09:42,031 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 12:09:44,574 [INFO] product_scraper - Scrape success → B08J5F3G18
+2025-11-26 12:09:44,602 [INFO] scraper_agent - [PRODUCT] Stored: B08J5F3G18
+2025-11-26 12:09:44,603 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:09:44,603 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:09:46,642 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:09:46,642 [INFO] scraper_agent - [REVIEWS] Start → B08J5F3G18
+2025-11-26 12:09:46,643 [INFO] review_scraper - Scraping reviews for product=B08J5F3G18, page=1
+2025-11-26 12:09:49,013 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:09:52,085 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:09:52,085 [INFO] scraper_agent - [REVIEWS] B08J5F3G18 → 10 reviews fetched
+2025-11-26 12:09:52,086 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:09:52,086 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:09:52,108 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:09:52,124 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:09:52,124 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:09:54,183 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:09:54,184 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:09:56,266 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:09:56,283 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:09:56,283 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:09:58,347 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:09:58,347 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:10:00,447 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:10:00,466 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:10:00,503 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B08J5F3G18
+2025-11-26 12:10:00,503 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CSKCY685
+2025-11-26 12:10:00,503 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CSKCY685
+2025-11-26 12:10:00,503 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:10:00,504 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:10:02,573 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:10:02,573 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:10:04,645 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:10:04,645 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 12:10:04,646 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 12:10:06,820 [INFO] product_scraper - Scrape success → B0CSKCY685
+2025-11-26 12:10:06,848 [INFO] scraper_agent - [PRODUCT] Stored: B0CSKCY685
+2025-11-26 12:10:06,849 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:10:06,849 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:10:08,898 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:10:08,898 [INFO] scraper_agent - [REVIEWS] Start → B0CSKCY685
+2025-11-26 12:10:08,898 [INFO] review_scraper - Scraping reviews for product=B0CSKCY685, page=1
+2025-11-26 12:10:11,045 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:10:14,096 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:10:14,097 [INFO] scraper_agent - [REVIEWS] B0CSKCY685 → 10 reviews fetched
+2025-11-26 12:10:14,098 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:10:14,098 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:10:14,121 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:10:14,136 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:10:14,137 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:10:16,155 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:10:16,155 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:10:18,259 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:10:18,276 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:10:18,276 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:10:20,316 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:10:20,316 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:10:22,428 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:10:22,511 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:10:22,552 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CSKCY685
+2025-11-26 12:10:22,553 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CWFR34L7
+2025-11-26 12:10:22,553 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CWFR34L7
+2025-11-26 12:10:22,553 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:10:22,553 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:10:24,563 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:10:24,563 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:10:26,599 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:10:26,599 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 12:10:26,599 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 12:10:28,869 [INFO] product_scraper - Scrape success → B0CWFR34L7
+2025-11-26 12:10:28,898 [INFO] scraper_agent - [PRODUCT] Stored: B0CWFR34L7
+2025-11-26 12:10:28,898 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:10:28,898 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:10:30,931 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:10:30,931 [INFO] scraper_agent - [REVIEWS] Start → B0CWFR34L7
+2025-11-26 12:10:30,931 [INFO] review_scraper - Scraping reviews for product=B0CWFR34L7, page=1
+2025-11-26 12:10:32,853 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:10:35,330 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:10:35,330 [INFO] scraper_agent - [REVIEWS] B0CWFR34L7 → 10 reviews fetched
+2025-11-26 12:10:35,332 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:10:35,332 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:10:35,354 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:10:35,368 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:10:35,368 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:10:37,400 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:10:37,400 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:10:39,510 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:10:39,530 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:10:39,530 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:10:41,563 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:10:41,563 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:10:43,612 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:10:43,630 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:10:43,668 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CWFR34L7
+2025-11-26 12:10:43,668 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DVCBDJBJ
+2025-11-26 12:10:43,668 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DVCBDJBJ
+2025-11-26 12:10:43,668 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:10:43,670 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:10:45,700 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:10:45,700 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:10:47,715 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:10:47,715 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 12:10:47,715 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 12:10:49,857 [INFO] product_scraper - Scrape success → B0DVCBDJBJ
+2025-11-26 12:10:49,885 [INFO] scraper_agent - [PRODUCT] Stored: B0DVCBDJBJ
+2025-11-26 12:10:49,888 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:10:49,888 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:10:51,936 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:10:51,936 [INFO] scraper_agent - [REVIEWS] Start → B0DVCBDJBJ
+2025-11-26 12:10:51,936 [INFO] review_scraper - Scraping reviews for product=B0DVCBDJBJ, page=1
+2025-11-26 12:10:54,339 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:10:57,205 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:10:57,206 [INFO] scraper_agent - [REVIEWS] B0DVCBDJBJ → 10 reviews fetched
+2025-11-26 12:10:57,206 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:10:57,207 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:10:57,229 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:10:57,244 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:10:57,244 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:10:59,283 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:10:59,283 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:11:01,369 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:11:01,388 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:11:01,388 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:11:03,435 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:11:03,435 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:11:05,520 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:11:05,540 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:11:05,577 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DVCBDJBJ
+2025-11-26 12:11:05,579 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS6V7L5M
+2025-11-26 12:11:05,579 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS6V7L5M
+2025-11-26 12:11:05,579 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:11:05,579 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:11:07,644 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:11:07,645 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:11:09,692 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:11:09,693 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 12:11:09,693 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 12:11:12,147 [INFO] product_scraper - Scrape success → B0DS6V7L5M
+2025-11-26 12:11:12,176 [INFO] scraper_agent - [PRODUCT] Stored: B0DS6V7L5M
+2025-11-26 12:11:12,177 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:11:12,177 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:11:14,227 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:11:14,227 [INFO] scraper_agent - [REVIEWS] Start → B0DS6V7L5M
+2025-11-26 12:11:14,227 [INFO] review_scraper - Scraping reviews for product=B0DS6V7L5M, page=1
+2025-11-26 12:11:16,335 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:11:18,671 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:11:18,672 [INFO] scraper_agent - [REVIEWS] B0DS6V7L5M → 10 reviews fetched
+2025-11-26 12:11:18,673 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:11:18,674 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:11:18,696 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:11:18,710 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:11:18,710 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:11:20,757 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:11:20,757 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:11:22,878 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:11:22,895 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:11:22,895 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:11:24,965 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:11:24,966 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:11:27,054 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:11:27,072 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:11:27,110 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS6V7L5M
+2025-11-26 12:11:27,110 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B094PSPVPC
+2025-11-26 12:11:27,110 [INFO] coordinator_agent - [RUN] Starting pipeline for B094PSPVPC
+2025-11-26 12:11:27,111 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:11:27,111 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:11:29,164 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:11:29,165 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:11:31,234 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:11:31,234 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 12:11:31,235 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 12:11:33,360 [INFO] product_scraper - Scrape success → B094PSPVPC
+2025-11-26 12:11:33,391 [INFO] scraper_agent - [PRODUCT] Stored: B094PSPVPC
+2025-11-26 12:11:33,392 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:11:33,393 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:11:35,441 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:11:35,441 [INFO] scraper_agent - [REVIEWS] Start → B094PSPVPC
+2025-11-26 12:11:35,441 [INFO] review_scraper - Scraping reviews for product=B094PSPVPC, page=1
+2025-11-26 12:11:37,768 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:11:40,112 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:11:40,113 [INFO] scraper_agent - [REVIEWS] B094PSPVPC → 10 reviews fetched
+2025-11-26 12:11:40,114 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:11:40,115 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:11:40,135 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:11:40,149 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:11:40,149 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:11:42,207 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:11:42,207 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:11:44,301 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:11:44,319 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:11:44,319 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:11:46,344 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:11:46,344 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:11:48,449 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:11:48,468 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:11:48,506 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B094PSPVPC
+2025-11-26 12:17:51,266 [INFO] coordinator_agent - [SEARCH] Searching for query='rtx 4090', page=1
+2025-11-26 12:17:51,266 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:18:38,029 [INFO] coordinator_agent - [SEARCH] Searching for query='rtx 4090', page=1
+2025-11-26 12:18:38,029 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:18:40,086 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:18:40,086 [INFO] coordinator_agent - [CALL] POST search_products → http://localhost:8001/a2a/execute
+2025-11-26 12:18:42,122 [INFO] scraper_agent - [A2A] Task received → search_products
+2025-11-26 12:18:42,123 [INFO] search_scraper - [SCRAPE] Searching Amazon for 'rtx 4090', page=1
+2025-11-26 12:18:43,632 [INFO] search_scraper - [SCRAPE] Found 16 ASINs via requests
+2025-11-26 12:18:43,633 [INFO] scraper_agent - [SEARCH] Returned 16 ASINs
+2025-11-26 12:18:43,634 [INFO] coordinator_agent - [CALL] SUCCESS task=search_products
+2025-11-26 12:18:43,634 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YCLG5PB
+2025-11-26 12:18:43,634 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YCLG5PB
+2025-11-26 12:18:43,634 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:18:43,635 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:18:45,685 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:18:45,686 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:18:47,706 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:18:47,707 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 12:18:47,707 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YCLG5PB
+2025-11-26 12:18:49,850 [INFO] product_scraper - Scrape success → B09YCLG5PB
+2025-11-26 12:18:53,821 [INFO] scraper_agent - [PRODUCT] Stored: B09YCLG5PB
+2025-11-26 12:18:53,822 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:18:53,822 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:18:55,860 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:18:55,860 [INFO] scraper_agent - [REVIEWS] Start → B09YCLG5PB
+2025-11-26 12:18:55,861 [INFO] review_scraper - Scraping reviews for product=B09YCLG5PB, page=1
+2025-11-26 12:18:58,141 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:19:01,226 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:19:01,226 [INFO] scraper_agent - [REVIEWS] B09YCLG5PB → 10 reviews fetched
+2025-11-26 12:19:01,230 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:19:01,230 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:19:04,714 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:19:04,726 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:19:04,726 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:19:06,777 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:19:06,778 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:19:12,281 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:19:12,290 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:19:12,290 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:19:14,331 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:19:14,331 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:19:21,265 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:19:21,276 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:19:21,294 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:19:21,306 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:19:21,308 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YCLG5PB
+2025-11-26 12:19:21,308 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BHD9TS9Q
+2025-11-26 12:19:21,308 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BHD9TS9Q
+2025-11-26 12:19:21,308 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:19:21,308 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:19:23,350 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:19:23,350 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:19:25,383 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:19:25,383 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 12:19:25,383 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BHD9TS9Q
+2025-11-26 12:19:27,783 [INFO] product_scraper - Scrape success → B0BHD9TS9Q
+2025-11-26 12:19:27,816 [INFO] scraper_agent - [PRODUCT] Stored: B0BHD9TS9Q
+2025-11-26 12:19:27,816 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:19:27,816 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:19:29,850 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:19:29,852 [INFO] scraper_agent - [REVIEWS] Start → B0BHD9TS9Q
+2025-11-26 12:19:29,852 [INFO] review_scraper - Scraping reviews for product=B0BHD9TS9Q, page=1
+2025-11-26 12:19:31,481 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:19:33,806 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:19:33,806 [INFO] scraper_agent - [REVIEWS] B0BHD9TS9Q → 10 reviews fetched
+2025-11-26 12:19:33,807 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:19:33,807 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:19:33,827 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:19:33,841 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:19:33,841 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:19:35,891 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:19:35,892 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:19:37,957 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:19:37,966 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:19:37,966 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:19:40,016 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:19:40,016 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:19:42,116 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:19:42,127 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:19:42,146 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:19:42,158 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:19:42,159 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BHD9TS9Q
+2025-11-26 12:19:42,159 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0BSVMLVTD
+2025-11-26 12:19:42,160 [INFO] coordinator_agent - [RUN] Starting pipeline for B0BSVMLVTD
+2025-11-26 12:19:42,160 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:19:42,160 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:19:44,216 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:19:44,216 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:19:46,265 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:19:46,266 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 12:19:46,266 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0BSVMLVTD
+2025-11-26 12:19:48,495 [INFO] product_scraper - Scrape success → B0BSVMLVTD
+2025-11-26 12:19:48,519 [INFO] scraper_agent - [PRODUCT] Stored: B0BSVMLVTD
+2025-11-26 12:19:48,520 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:19:48,520 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:19:50,563 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:19:50,564 [INFO] scraper_agent - [REVIEWS] Start → B0BSVMLVTD
+2025-11-26 12:19:50,564 [INFO] review_scraper - Scraping reviews for product=B0BSVMLVTD, page=1
+2025-11-26 12:19:52,191 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:19:55,245 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:19:55,246 [INFO] scraper_agent - [REVIEWS] B0BSVMLVTD → 10 reviews fetched
+2025-11-26 12:19:55,247 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:19:55,247 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:19:55,266 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:19:55,277 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:19:55,278 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:19:57,323 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:19:57,323 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:19:59,415 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:19:59,425 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:19:59,425 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:20:01,471 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:20:01,472 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:20:03,531 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:20:03,542 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:20:03,560 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:20:03,572 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:20:03,573 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0BSVMLVTD
+2025-11-26 12:20:03,573 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2R6948
+2025-11-26 12:20:03,573 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2R6948
+2025-11-26 12:20:03,573 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:20:03,573 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:20:05,621 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:20:05,621 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:20:07,648 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:20:07,648 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 12:20:07,648 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2R6948
+2025-11-26 12:20:09,994 [INFO] product_scraper - Scrape success → B0DS2R6948
+2025-11-26 12:20:10,015 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2R6948
+2025-11-26 12:20:10,016 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:20:10,016 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:20:12,075 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:20:12,076 [INFO] scraper_agent - [REVIEWS] Start → B0DS2R6948
+2025-11-26 12:20:12,076 [INFO] review_scraper - Scraping reviews for product=B0DS2R6948, page=1
+2025-11-26 12:20:14,385 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:20:17,481 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:20:17,482 [INFO] scraper_agent - [REVIEWS] B0DS2R6948 → 10 reviews fetched
+2025-11-26 12:20:17,483 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:20:17,483 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:20:17,501 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:20:17,517 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:20:17,517 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:20:19,568 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:20:19,568 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:20:21,660 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:20:21,677 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:20:21,677 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:20:23,733 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:20:23,734 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:20:25,809 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:20:25,820 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:20:25,838 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:20:25,852 [ERROR] coordinator_agent - [ERROR] Memory search failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\coordinator_agent.py", line 252, in run
+    similar_products = self.product_mem.search(product_emb, top_k=5)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\product_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:20:25,852 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2R6948
+2025-11-26 12:20:25,852 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0916ZWZ9S
+2025-11-26 12:20:25,852 [INFO] coordinator_agent - [RUN] Starting pipeline for B0916ZWZ9S
+2025-11-26 12:20:25,852 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:20:25,854 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:20:27,903 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:20:27,903 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:20:29,918 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:20:29,918 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 12:20:29,919 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0916ZWZ9S
+2025-11-26 12:20:32,260 [INFO] product_scraper - Scrape success → B0916ZWZ9S
+2025-11-26 12:20:32,295 [INFO] scraper_agent - [PRODUCT] Stored: B0916ZWZ9S
+2025-11-26 12:20:32,296 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:20:32,297 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:20:34,346 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:20:34,346 [INFO] scraper_agent - [REVIEWS] Start → B0916ZWZ9S
+2025-11-26 12:20:34,347 [INFO] review_scraper - Scraping reviews for product=B0916ZWZ9S, page=1
+2025-11-26 12:20:36,421 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:20:39,357 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:20:39,357 [INFO] scraper_agent - [REVIEWS] B0916ZWZ9S → 10 reviews fetched
+2025-11-26 12:20:39,358 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:20:39,358 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:20:39,379 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:20:39,397 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:20:39,397 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:20:41,444 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:20:41,444 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:20:43,536 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:20:43,552 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:20:43,552 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:20:45,583 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:20:45,584 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:20:47,652 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:20:47,662 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:20:47,682 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:20:47,717 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0916ZWZ9S
+2025-11-26 12:20:47,717 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS2WQZ2M
+2025-11-26 12:20:47,717 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS2WQZ2M
+2025-11-26 12:20:47,717 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:20:47,717 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:20:49,782 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:20:49,782 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:20:51,824 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:20:51,824 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 12:20:51,824 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS2WQZ2M
+2025-11-26 12:20:54,153 [INFO] product_scraper - Scrape success → B0DS2WQZ2M
+2025-11-26 12:20:54,183 [INFO] scraper_agent - [PRODUCT] Stored: B0DS2WQZ2M
+2025-11-26 12:20:54,184 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:20:54,185 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:20:56,221 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:20:56,221 [INFO] scraper_agent - [REVIEWS] Start → B0DS2WQZ2M
+2025-11-26 12:20:56,221 [INFO] review_scraper - Scraping reviews for product=B0DS2WQZ2M, page=1
+2025-11-26 12:20:57,355 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:20:59,689 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:20:59,689 [INFO] scraper_agent - [REVIEWS] B0DS2WQZ2M → 10 reviews fetched
+2025-11-26 12:20:59,690 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:20:59,690 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:20:59,713 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:20:59,726 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:20:59,726 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:21:01,770 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:21:01,771 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:21:03,880 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:21:03,896 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:21:03,897 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:21:05,922 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:21:05,922 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:21:08,009 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:21:08,019 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:21:08,038 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:21:08,072 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS2WQZ2M
+2025-11-26 12:21:08,072 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09YD4FJ5R
+2025-11-26 12:21:08,072 [INFO] coordinator_agent - [RUN] Starting pipeline for B09YD4FJ5R
+2025-11-26 12:21:08,072 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:21:08,073 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:21:10,096 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:21:10,096 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:21:12,124 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:21:12,125 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 12:21:12,125 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09YD4FJ5R
+2025-11-26 12:21:14,279 [INFO] product_scraper - Scrape success → B09YD4FJ5R
+2025-11-26 12:21:14,310 [INFO] scraper_agent - [PRODUCT] Stored: B09YD4FJ5R
+2025-11-26 12:21:14,311 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:21:14,312 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:21:16,333 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:21:16,333 [INFO] scraper_agent - [REVIEWS] Start → B09YD4FJ5R
+2025-11-26 12:21:16,333 [INFO] review_scraper - Scraping reviews for product=B09YD4FJ5R, page=1
+2025-11-26 12:21:17,977 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:21:20,817 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:21:20,818 [INFO] scraper_agent - [REVIEWS] B09YD4FJ5R → 10 reviews fetched
+2025-11-26 12:21:20,818 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:21:20,819 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:21:20,841 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:21:20,854 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:21:20,854 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:21:22,894 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:21:22,894 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:21:24,970 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:21:24,985 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:21:24,986 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:21:27,017 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:21:27,017 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:21:29,072 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:21:29,082 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:21:29,101 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:21:29,136 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09YD4FJ5R
+2025-11-26 12:21:29,136 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DT7JS6BG
+2025-11-26 12:21:29,136 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DT7JS6BG
+2025-11-26 12:21:29,136 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:21:29,136 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:21:31,167 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:21:31,167 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:21:33,198 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:21:33,199 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 12:21:33,199 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DT7JS6BG
+2025-11-26 12:21:35,435 [INFO] product_scraper - Scrape success → B0DT7JS6BG
+2025-11-26 12:21:35,464 [INFO] scraper_agent - [PRODUCT] Stored: B0DT7JS6BG
+2025-11-26 12:21:35,465 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:21:35,466 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:21:37,512 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:21:37,513 [INFO] scraper_agent - [REVIEWS] Start → B0DT7JS6BG
+2025-11-26 12:21:37,513 [INFO] review_scraper - Scraping reviews for product=B0DT7JS6BG, page=1
+2025-11-26 12:21:39,422 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:21:41,801 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:21:41,801 [INFO] scraper_agent - [REVIEWS] B0DT7JS6BG → 10 reviews fetched
+2025-11-26 12:21:41,801 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:21:41,801 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:21:41,823 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:21:41,834 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:21:41,834 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:21:43,868 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:21:43,869 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:21:45,966 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:21:45,984 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:21:45,984 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:21:48,031 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:21:48,032 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:21:50,123 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:21:50,134 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:21:50,153 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:21:50,188 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DT7JS6BG
+2025-11-26 12:21:50,188 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DQSD7YQC
+2025-11-26 12:21:50,188 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DQSD7YQC
+2025-11-26 12:21:50,188 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:21:50,188 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:21:52,235 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:21:52,236 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:21:54,299 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:21:54,299 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 12:21:54,301 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DQSD7YQC
+2025-11-26 12:21:56,871 [INFO] product_scraper - Scrape success → B0DQSD7YQC
+2025-11-26 12:21:56,905 [INFO] scraper_agent - [PRODUCT] Stored: B0DQSD7YQC
+2025-11-26 12:21:56,905 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:21:56,905 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:21:58,946 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:21:58,946 [INFO] scraper_agent - [REVIEWS] Start → B0DQSD7YQC
+2025-11-26 12:21:58,946 [INFO] review_scraper - Scraping reviews for product=B0DQSD7YQC, page=1
+2025-11-26 12:22:01,245 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:22:03,619 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:22:03,619 [INFO] scraper_agent - [REVIEWS] B0DQSD7YQC → 10 reviews fetched
+2025-11-26 12:22:03,620 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:22:03,620 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:22:03,641 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:22:03,654 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:22:03,655 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:22:05,712 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:22:05,713 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:22:07,817 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:22:07,835 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:22:07,835 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:22:09,873 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:22:09,873 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:22:11,940 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:22:11,951 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:22:11,969 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:22:12,004 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DQSD7YQC
+2025-11-26 12:22:12,004 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B09GWB753L
+2025-11-26 12:22:12,005 [INFO] coordinator_agent - [RUN] Starting pipeline for B09GWB753L
+2025-11-26 12:22:12,005 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:22:12,005 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:22:14,044 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:22:14,044 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:22:16,101 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:22:16,102 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 12:22:16,102 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B09GWB753L
+2025-11-26 12:22:18,450 [INFO] product_scraper - Scrape success → B09GWB753L
+2025-11-26 12:22:18,474 [INFO] scraper_agent - [PRODUCT] Stored: B09GWB753L
+2025-11-26 12:22:18,475 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:22:18,475 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:22:20,509 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:22:20,509 [INFO] scraper_agent - [REVIEWS] Start → B09GWB753L
+2025-11-26 12:22:20,509 [INFO] review_scraper - Scraping reviews for product=B09GWB753L, page=1
+2025-11-26 12:22:22,202 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:22:25,242 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:22:25,244 [INFO] scraper_agent - [REVIEWS] B09GWB753L → 10 reviews fetched
+2025-11-26 12:22:25,244 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:22:25,245 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:22:25,264 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:22:25,278 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:22:25,279 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:22:27,321 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:22:27,321 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:22:29,433 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:22:29,450 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:22:29,451 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:22:31,501 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:22:31,502 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:22:33,562 [ERROR] pricing_agent - [ERROR] Failed loading competitor memory: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "C:\work\competitor research agent\agents\pricing_agent.py", line 137, in pricing_api
+    search_results = pricing_mem.search(q_emb, top_k=10)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\competitor research agent\memory_bank\pricing_memory.py", line 39, in search
+    key = r["record"]["key"]
+          ~~~~~~~~~~~^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-11-26 12:22:33,573 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:22:33,591 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:22:33,624 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B09GWB753L
+2025-11-26 12:22:33,625 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B08J5F3G18
+2025-11-26 12:22:33,625 [INFO] coordinator_agent - [RUN] Starting pipeline for B08J5F3G18
+2025-11-26 12:22:33,625 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:22:33,625 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:22:35,669 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:22:35,669 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:22:37,718 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:22:37,719 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 12:22:37,719 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B08J5F3G18
+2025-11-26 12:22:40,317 [INFO] product_scraper - Scrape success → B08J5F3G18
+2025-11-26 12:22:40,348 [INFO] scraper_agent - [PRODUCT] Stored: B08J5F3G18
+2025-11-26 12:22:40,349 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:22:40,349 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:22:42,380 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:22:42,380 [INFO] scraper_agent - [REVIEWS] Start → B08J5F3G18
+2025-11-26 12:22:42,380 [INFO] review_scraper - Scraping reviews for product=B08J5F3G18, page=1
+2025-11-26 12:22:44,695 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:22:47,512 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:22:47,512 [INFO] scraper_agent - [REVIEWS] B08J5F3G18 → 10 reviews fetched
+2025-11-26 12:22:47,513 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:22:47,513 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:22:47,538 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:22:47,551 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:22:47,551 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:22:49,600 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:22:49,601 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:22:51,704 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:22:51,723 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:22:51,723 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:22:53,746 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:22:53,746 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:22:55,827 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:22:55,848 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:22:55,883 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B08J5F3G18
+2025-11-26 12:22:55,883 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CSKCY685
+2025-11-26 12:22:55,883 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CSKCY685
+2025-11-26 12:22:55,884 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:22:55,884 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:22:57,919 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:22:57,921 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:22:59,975 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:22:59,975 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 12:22:59,975 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CSKCY685
+2025-11-26 12:23:02,112 [INFO] product_scraper - Scrape success → B0CSKCY685
+2025-11-26 12:23:02,141 [INFO] scraper_agent - [PRODUCT] Stored: B0CSKCY685
+2025-11-26 12:23:02,142 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:23:02,144 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:23:04,164 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:23:04,164 [INFO] scraper_agent - [REVIEWS] Start → B0CSKCY685
+2025-11-26 12:23:04,164 [INFO] review_scraper - Scraping reviews for product=B0CSKCY685, page=1
+2025-11-26 12:23:06,326 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:23:09,368 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:23:09,368 [INFO] scraper_agent - [REVIEWS] B0CSKCY685 → 10 reviews fetched
+2025-11-26 12:23:09,369 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:23:09,369 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:23:09,398 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:23:09,415 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:23:09,415 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:23:11,476 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:23:11,476 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:23:13,570 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:23:13,587 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:23:13,588 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:23:15,659 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:23:15,659 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:23:17,735 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:23:17,753 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:23:17,787 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CSKCY685
+2025-11-26 12:23:17,787 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0CWFR34L7
+2025-11-26 12:23:17,788 [INFO] coordinator_agent - [RUN] Starting pipeline for B0CWFR34L7
+2025-11-26 12:23:17,788 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:23:17,788 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:23:19,856 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:23:19,856 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:23:21,913 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:23:21,913 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 12:23:21,914 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0CWFR34L7
+2025-11-26 12:23:24,265 [INFO] product_scraper - Scrape success → B0CWFR34L7
+2025-11-26 12:23:24,293 [INFO] scraper_agent - [PRODUCT] Stored: B0CWFR34L7
+2025-11-26 12:23:24,293 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:23:24,294 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:23:26,325 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:23:26,326 [INFO] scraper_agent - [REVIEWS] Start → B0CWFR34L7
+2025-11-26 12:23:26,327 [INFO] review_scraper - Scraping reviews for product=B0CWFR34L7, page=1
+2025-11-26 12:23:27,961 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:23:30,309 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:23:30,310 [INFO] scraper_agent - [REVIEWS] B0CWFR34L7 → 10 reviews fetched
+2025-11-26 12:23:30,310 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:23:30,310 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:23:30,330 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:23:30,344 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:23:30,344 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:23:32,407 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:23:32,408 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:23:34,505 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:23:34,521 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:23:34,522 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:23:36,572 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:23:36,572 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:23:38,657 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:23:38,676 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:23:38,710 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0CWFR34L7
+2025-11-26 12:23:38,710 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DVCBDJBJ
+2025-11-26 12:23:38,710 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DVCBDJBJ
+2025-11-26 12:23:38,710 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:23:38,711 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:23:40,773 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:23:40,773 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:23:42,833 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:23:42,834 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 12:23:42,834 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DVCBDJBJ
+2025-11-26 12:23:45,014 [INFO] product_scraper - Scrape success → B0DVCBDJBJ
+2025-11-26 12:23:45,046 [INFO] scraper_agent - [PRODUCT] Stored: B0DVCBDJBJ
+2025-11-26 12:23:45,047 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:23:45,048 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:23:47,093 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:23:47,095 [INFO] scraper_agent - [REVIEWS] Start → B0DVCBDJBJ
+2025-11-26 12:23:47,095 [INFO] review_scraper - Scraping reviews for product=B0DVCBDJBJ, page=1
+2025-11-26 12:23:48,774 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:23:51,792 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:23:51,792 [INFO] scraper_agent - [REVIEWS] B0DVCBDJBJ → 10 reviews fetched
+2025-11-26 12:23:51,793 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:23:51,793 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:23:51,814 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:23:51,829 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:23:51,829 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:23:53,864 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:23:53,864 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:23:55,953 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:23:55,966 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:23:55,966 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:23:58,035 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:23:58,035 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:24:00,122 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:24:00,140 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:24:00,174 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DVCBDJBJ
+2025-11-26 12:24:00,175 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B0DS6V7L5M
+2025-11-26 12:24:00,175 [INFO] coordinator_agent - [RUN] Starting pipeline for B0DS6V7L5M
+2025-11-26 12:24:00,175 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:24:00,175 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:24:02,203 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:24:02,203 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:24:04,250 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:24:04,250 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 12:24:04,252 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B0DS6V7L5M
+2025-11-26 12:24:06,780 [INFO] product_scraper - Scrape success → B0DS6V7L5M
+2025-11-26 12:24:06,808 [INFO] scraper_agent - [PRODUCT] Stored: B0DS6V7L5M
+2025-11-26 12:24:06,808 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:24:06,808 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:24:08,865 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:24:08,865 [INFO] scraper_agent - [REVIEWS] Start → B0DS6V7L5M
+2025-11-26 12:24:08,865 [INFO] review_scraper - Scraping reviews for product=B0DS6V7L5M, page=1
+2025-11-26 12:24:10,581 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:24:12,933 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:24:12,933 [INFO] scraper_agent - [REVIEWS] B0DS6V7L5M → 10 reviews fetched
+2025-11-26 12:24:12,934 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:24:12,935 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:24:12,955 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:24:12,970 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:24:12,970 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:24:15,036 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:24:15,036 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:24:17,172 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:24:17,188 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:24:17,189 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:24:19,222 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:24:19,222 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:24:21,285 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:24:21,306 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:24:21,342 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B0DS6V7L5M
+2025-11-26 12:24:21,342 [INFO] coordinator_agent - [SEARCH] Processing ASIN=B094PSPVPC
+2025-11-26 12:24:21,342 [INFO] coordinator_agent - [RUN] Starting pipeline for B094PSPVPC
+2025-11-26 12:24:21,342 [INFO] coordinator_agent - [RUN] Stage 1 → Scraping product & reviews
+2025-11-26 12:24:21,342 [INFO] coordinator_agent - [DISCOVER] Looking up agent `scraper_agent`
+2025-11-26 12:24:23,367 [INFO] coordinator_agent - [DISCOVER] Found `scraper_agent` at http://localhost:8001
+2025-11-26 12:24:23,368 [INFO] coordinator_agent - [CALL] POST fetch_product_page → http://localhost:8001/a2a/execute
+2025-11-26 12:24:25,394 [INFO] scraper_agent - [A2A] Task received → fetch_product_page
+2025-11-26 12:24:25,395 [INFO] scraper_agent - [PRODUCT] Begin scrape: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 12:24:25,395 [INFO] product_scraper - Scraping product page: https://www.amazon.com/dp/B094PSPVPC
+2025-11-26 12:24:27,623 [INFO] product_scraper - Scrape success → B094PSPVPC
+2025-11-26 12:24:27,650 [INFO] scraper_agent - [PRODUCT] Stored: B094PSPVPC
+2025-11-26 12:24:27,652 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_product_page
+2025-11-26 12:24:27,652 [INFO] coordinator_agent - [CALL] POST fetch_reviews → http://localhost:8001/a2a/execute
+2025-11-26 12:24:29,660 [INFO] scraper_agent - [A2A] Task received → fetch_reviews
+2025-11-26 12:24:29,660 [INFO] scraper_agent - [REVIEWS] Start → B094PSPVPC
+2025-11-26 12:24:29,661 [INFO] review_scraper - Scraping reviews for product=B094PSPVPC, page=1
+2025-11-26 12:24:31,560 [WARNING] review_scraper - Amazon blocked => switching to Playwright (page 1)
+2025-11-26 12:24:33,886 [WARNING] review_scraper - No reviews found at page 1 => using FAKE_REVIEWS
+2025-11-26 12:24:33,888 [INFO] scraper_agent - [REVIEWS] B094PSPVPC → 10 reviews fetched
+2025-11-26 12:24:33,889 [INFO] coordinator_agent - [CALL] SUCCESS task=fetch_reviews
+2025-11-26 12:24:33,889 [INFO] coordinator_agent - [RUN] Stage 2 → Computing embeddings
+2025-11-26 12:24:33,910 [INFO] coordinator_agent - [RUN] Stage 3 → Persisting product info to memory
+2025-11-26 12:24:33,924 [INFO] coordinator_agent - [RUN] Stage 4 → Sentiment analysis
+2025-11-26 12:24:33,924 [INFO] coordinator_agent - [DISCOVER] Looking up agent `sentiment_agent`
+2025-11-26 12:24:35,982 [INFO] coordinator_agent - [DISCOVER] Found `sentiment_agent` at http://localhost:8002
+2025-11-26 12:24:35,982 [INFO] coordinator_agent - [CALL] POST analyze_reviews → http://localhost:8002/a2a/execute
+2025-11-26 12:24:38,071 [INFO] coordinator_agent - [CALL] SUCCESS task=analyze_reviews
+2025-11-26 12:24:38,088 [INFO] coordinator_agent - [RUN] Stage 5 → Pricing recommendation
+2025-11-26 12:24:38,088 [INFO] coordinator_agent - [DISCOVER] Looking up agent `pricing_agent`
+2025-11-26 12:24:40,127 [INFO] coordinator_agent - [DISCOVER] Found `pricing_agent` at http://localhost:8003
+2025-11-26 12:24:40,127 [INFO] coordinator_agent - [CALL] POST recommend_price → http://localhost:8003/a2a/execute
+2025-11-26 12:24:42,224 [INFO] coordinator_agent - [CALL] SUCCESS task=recommend_price
+2025-11-26 12:24:42,243 [INFO] coordinator_agent - [RUN] Stage 6 → Memory insights
+2025-11-26 12:24:42,278 [INFO] coordinator_agent - [RUN] FINISHED pipeline for B094PSPVPC
