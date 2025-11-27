@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from typing import Dict, Any, Optional
-from scrapers.util import smart_get, is_blocked_html, parse_price, extract_asin_from_url
+from infra.util import smart_get, is_blocked_html, parse_price, extract_asin_from_url
 from scrapers.logger import get_logger
 import re
 

@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from typing import List, Dict, Any, Optional
-from scrapers.util import smart_get, is_blocked_html
+from infra.util import smart_get, is_blocked_html
 import asyncio
 from playwright.async_api import async_playwright
 from scrapers.logger import get_logger

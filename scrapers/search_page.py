@@ -3,7 +3,7 @@ import urllib.parse
 from typing import List, Optional
 from bs4 import BeautifulSoup
 
-from scrapers.util import smart_get, is_blocked_html
+from infra.util import smart_get, is_blocked_html
 from scrapers.logger import get_logger
 from playwright.async_api import async_playwright
 

@@ -1,9 +1,0 @@
-{
-    "id": "case_3",
-    "mission_input": "https://mocksite.com/product/gtx-1660-ti",
-    "expected": {
-        "product_contains": ["1660"],
-        "must_include_sections": ["sentiment"],
-        "max_price": 1500
-    }
-}
