@@ -27,6 +27,9 @@ This project is my submission for the **Kaggle Agents Intensive — Capstone Pro
 
 ## 🧠 Agent Architecture
 
+<p align="center">
+  <img src="agent architecture.png" width="85%" />
+</p>
 
 
 ---
