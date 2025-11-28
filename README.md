@@ -54,6 +54,27 @@ This project is my submission for the **Kaggle Agents Intensive — Capstone Pro
 
 ---
 
+## 🖥️ Business Report (Dark Tech Theme)
+
+Below is a real screenshot of the auto-generated competitor analysis report.
+
+1️⃣ Market Overview
+<p align="center"> <img src="overview.png" width="85%" /> </p>
+
+2️⃣ Pricing vs Competitor Chart
+<p align="center"> <img src="pricing vs competitor.png" width="85%" /> </p>
+
+3️⃣ Sentiment Distribution Chart
+<p align="center"> <img src="sentiment distibution.png" width="85%" /> </p>
+
+4️⃣ Highlights Section
+<p align="center"> <img src="highlights.png" width="85%" /> </p>
+
+5️⃣ Product Listing Section
+<p align="center"> <img src="product listing.png" width="85%" /> </p>
+
+---
+
 ## 📂 Project Structure
 
 competitor research agent/  
