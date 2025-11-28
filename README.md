@@ -2,6 +2,10 @@
 
 **_Autonomous multi-agent system for scraping, analyzing sentiment, and generating AI-powered pricing recommendations._**
 
+<p align="center">
+  <img src="banner.png" width="85%" />
+</p>
+
 ---
 
 ## 📌 Overview
