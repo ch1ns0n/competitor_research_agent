@@ -49,29 +49,58 @@ def safe_get(d, *keys, default=None):
 # Build dataframes
 # -------------------------
 def build_dfs(records):
-    # We'll produce a products list where each record is expected to already
-    # contain "product", "sentiment", "pricing" per your merged schema.
     products = []
+
     for rec in records:
-        product = rec.get("product") or {}
-        pricing = rec.get("pricing") or {}
-        sentiment = rec.get("sentiment") or {}
-        # Some merged sources may keep metadata under memory_insights.pricing_history -> record.metadata
+        meta = rec.get("metadata", {})
+
+        # PRODUCT FIELDS
+        product = {
+            "key": rec.get("key") or meta.get("product_id"),
+            "product_id": meta.get("product_id"),
+            "title": meta.get("title") or "Unknown title",
+            "marketplace": meta.get("marketplace"),
+            "url": meta.get("url"),
+            "price": float(meta.get("price") or 0.0),
+            "rating": meta.get("rating"),
+        }
+
+        # SENTIMENT FIELDS
+        sentiment = {
+            "positive_ratio": float(meta.get("positive_ratio") or 0.0),
+            "n_reviews": meta.get("n_reviews") or 0,
+            "top_issues": meta.get("top_issues", []),
+        }
+
+        # PRICING FIELDS
+        pricing = {
+            "recommended_price": float(meta.get("recommended_price") or 0.0),
+            "competitor_average_price": (
+                float(meta.get("competitor_average_price"))
+                if meta.get("competitor_average_price") not in (None, "null")
+                else None
+            ),
+            "base_price": float(meta.get("base_price") or 0.0),
+            "business_reason": meta.get("business_reason", []),
+        }
+
         products.append({
-            "key": product.get("product_id") or product.get("key") or safe_get(product, "metadata", "product_id") or "UNKNOWN",
-            "title": product.get("title") or safe_get(product, "metadata", "title") or "Unknown title",
-            "marketplace": product.get("marketplace") or safe_get(product, "metadata", "marketplace"),
-            "url": product.get("url") or safe_get(product, "metadata", "url"),
-            "price": float(product.get("price") or safe_get(product, "metadata", "price") or pricing.get("base_price") or pricing.get("competitor_average_price") or 0.0),
-            "rating": product.get("rating") or safe_get(product, "metadata", "rating") or None,
-            "reviews_count": rec.get("reviews_count") or safe_get(sentiment, "n_reviews") or 0,
-            "positive_ratio": float(sentiment.get("positive_ratio") if sentiment.get("positive_ratio") is not None else (pricing.get("sentiment_score") or 0.5)),
-            "recommended_price": float(pricing.get("recommended_price") or pricing.get("base_price") or 0.0),
-            "competitor_average_price": (float(pricing.get("competitor_average_price")) if pricing.get("competitor_average_price") not in (None, "null") else None),
-            "business_reason": pricing.get("business_reason") or []
+            "key": product["key"],
+            "title": product["title"],
+            "marketplace": product["marketplace"],
+            "url": product["url"],
+            "price": product["price"],
+            "rating": product["rating"],
+            "reviews_count": sentiment["n_reviews"],
+            "positive_ratio": sentiment["positive_ratio"],
+            "recommended_price": pricing["recommended_price"],
+            "competitor_average_price": pricing["competitor_average_price"],
+            "business_reason": pricing["business_reason"],
         })
+
     df = pd.DataFrame(products)
     return df
+
 
 # -------------------------
 # Charts
@@ -266,9 +295,9 @@ def render_product_card(row):
 # Main
 # -------------------------
 def generate_report(input_path, output_path):
-    records = read_jsonl(input_path)
+    records = read_jsonl("merged.jsonl")
     if not records:
-        print("No records found in", input_path)
+        print("No records found in", "merged.jsonl")
         return
 
     df = build_dfs(records)
